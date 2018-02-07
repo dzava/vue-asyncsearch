@@ -1,0 +1,73 @@
+svg {
+    stroke: currentColor;
+    fill: currentColor;
+}
+
+[v-cloak] {
+    display: none;
+}
+
+.absolute--center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.as-refinement-list-item {
+    display: inline;
+}
+
+.pagination,
+.as-pagination {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.as-pagination-item {
+    padding: .5rem .75rem;
+    border: 1px solid #eee;
+    color: #4d4d4f;
+    line-height: 1.25;
+    text-decoration: none;
+}
+
+.as-pagination-item:hover,
+.as-pagination-item.active {
+    background-color: #eee;
+}
+
+.loading-indicator {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    z-index: 1000;
+}
+
+.loading-indicator:after {
+    position: absolute;
+    right: calc(50% - 0.5em);
+    top: calc(50% - 0.5em);
+    display: block;
+    width: 1em;
+    height: 1em;
+    content: '';
+    animation: spinAround 500ms infinite linear;
+    border: 2px solid black;
+    border-top-color: transparent;
+    border-right-color: transparent;
+    border-radius: 100%;
+}
+
+@keyframes spinAround {
+    from {
+        transform: rotate(0deg)
+    }
+    to {
+        transform: rotate(359deg)
+    }
+}

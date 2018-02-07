@@ -1,0 +1,86 @@
+<html>
+<head>
+    <title>Vue async search</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<link rel="stylesheet" href="https://unpkg.com/tachyons@4.9.1/css/tachyons.min.css"/>
+<body>
+
+    <div id="app" class="ph4 min-vh-100 bg-light-gray" v-cloak>
+        <div class="mw7 center bg-white ph3 pv1 br1">
+            <as-search url="https://example.com/users" :store-config="storeConfig">
+
+                <as-debug inline-template>
+                    <p>{{ url }}</p>
+                </as-debug>
+
+                <div class="flex">
+                    <as-input name="first_name" placeholder="First name"
+                              class="input-reset border-box pa2 mb2 mr3 w-100 mw-100 ba b--black-20"
+                              :reset-filters="['page']"></as-input>
+
+                    <as-input name="last_name" placeholder="Last name"
+                              class="input-reset border-box pa2 mb2 w-100 mw-100 ba b--black-20"
+                              :reset-filters="['page']"></as-input>
+                </div>
+
+                <as-refinement-list name="role"
+                                    class="tc pv2"
+                                    :reset-filters="['page']"
+                                    :default-value="[]"
+                                    :options="[
+                                        {label: 'Administrators', value: 'admin'},
+                                        {label: 'Moderators', value: 'moderator'},
+                                        {label: 'Users', value: 'user'},
+                                    ]">
+                </as-refinement-list>
+
+                <as-filter-by-selector class="pa2 mb2 ba b--black-20 bg-white"
+                                       name="per_page"
+                                       :reset-filters="['page']"
+                                       :default-value="5"
+                                       :options="[
+                                            {label: '3 users per page', value: 3},
+                                            {label: '5 users per page', value: 5},
+                                            {label: '10 users per page', value: 10},
+                                            {label: '12 users per page', value: 12},
+                ]"></as-filter-by-selector>
+
+                <as-clear class="input-reset relative pa2 bg-white br1 ba b--black-20 pointer">
+                    Reset filters
+                </as-clear>
+
+                <as-clear class="input-reset relative pa2 bg-white br1 ba b--black-20 pointer"
+                          :filters="['first_name']">
+                    Reset first_name only
+                </as-clear>
+
+                <div class="relative overflow-y-auto ba b--light-gray pa2" style="height: 65vh">
+                    <as-loading class="absolute absolute--fill bg-white-80">
+                        <div class="loading-indicator"></div>
+                    </as-loading>
+
+                    <as-no-results class="mt4 tc"></as-no-results>
+
+                    <as-results>
+                        <div class="flex items-center" slot-scope="{ result: user }">
+                            <img class="br-100 mr3 pa1 ba b--black-10 h3 w3" :src="user.picture"
+                                 :alt="`user.first_name user.last_name 's avatar`">
+                            {{ user.first_name }} {{ user.last_name }}
+                            <span class="ml2 gray">({{ user.role }})</span>
+                        </div>
+                    </as-results>
+
+                </div>
+
+                <as-pagination class="justify-center mt3"></as-pagination>
+
+            </as-search>
+
+        </div>
+    </div>
+
+    <script src="./build/app.js"></script>
+</body>
+</html>

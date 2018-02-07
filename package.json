@@ -1,0 +1,68 @@
+{
+  "name": "vue-asyncsearch",
+  "version": "0.0.1",
+  "description": "A collection of components to build search pages",
+  "main": "dist/index.js",
+  "jsnext:main": "src/index.js",
+  "scripts": {
+    "start": "webpack-dev-server --config docs/webpack.config.js",
+    "build": "rm -rf dist && NODE_ENV=production webpack",
+    "demo": "NODE_ENV=production webpack --config docs/webpack.config.js",
+    "prepublish": "npm run test; npm run build",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dzava/vue-asyncsearch.git"
+  },
+  "keywords": [
+    "vue",
+    "async",
+    "search"
+  ],
+  "author": "Dimitris Zavantias",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dzava/vue-asyncsearch/issues"
+  },
+  "homepage": "https://github.com/dzava/vue-asyncsearch",
+  "peerDependencies": {
+    "vue": "^2.3.0"
+  },
+  "optionalDependencies": {
+    "axios": ">=0.15 <1.0"
+  },
+  "devDependencies": {
+    "axios": ">=0.15 <1.0",
+    "axios-mock-adapter": "^1.12.0",
+    "babel-core": "^6.24.1",
+    "babel-loader": "^7.0.0",
+    "babel-plugin-transform-object-rest-spread": "^6.16.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.4.0",
+    "css-loader": "^0.28.1",
+    "eslint": "^3.7.1",
+    "eslint-config-spatie": "^1.1.0",
+    "jest": "^19.0.0",
+    "jest-vue-preprocessor": "^0.2.0",
+    "lodash.debounce": "^4.0.8",
+    "lodash.pickby": "^4.6.0",
+    "vue": "^2.3.0",
+    "vue-loader": "^12.0.3",
+    "vue-template-compiler": "^2.3.0",
+    "webpack": "^2.3.3",
+    "webpack-dev-server": "^2.4.2",
+    "webpack-merge": "^4.1.0"
+  },
+  "jest": {
+    "testRegex": "test.js$",
+    "moduleFileExtensions": [
+      "js",
+      "vue"
+    ],
+    "transform": {
+      "^.+\\.js$": "<rootDir>/node_modules/babel-jest",
+      ".*\\.(vue)$": "<rootDir>/node_modules/jest-vue-preprocessor"
+    }
+  }
+}
