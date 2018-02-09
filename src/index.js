@@ -2,6 +2,7 @@ import Clear from './components/Clear'
 import FilterBySelector from './components/FilterBySelector'
 import Input from './components/Input'
 import Loading from './components/Loading'
+import LoadMore from './components/LoadMore'
 import NoResults from './components/NoResults'
 import Pagination from './components/Pagination'
 import RefinementList from './components/RefinementList'
@@ -14,6 +15,7 @@ const AsyncSearch = {
     FilterBySelector,
     Input,
     Loading,
+    LoadMore,
     NoResults,
     Pagination,
     RefinementList,
@@ -25,6 +27,7 @@ const AsyncSearch = {
         Vue.component('as-filter-by-selector', FilterBySelector)
         Vue.component('as-input', Input)
         Vue.component('as-loading', Loading)
+        Vue.component('as-load-more', LoadMore)
         Vue.component('as-no-results', NoResults)
         Vue.component('as-pagination', Pagination)
         Vue.component('as-refinement-list', RefinementList)
@@ -40,6 +43,7 @@ export {
     FilterBySelector,
     Input,
     Loading,
+    LoadMore,
     NoResults,
     Pagination,
     RefinementList,

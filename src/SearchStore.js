@@ -25,7 +25,7 @@ export default class SearchStore {
 
     registerFilter(name, value) {
         if (this.state.filters[name] !== undefined) {
-            throw new Error(`Filter '${name}' is already registered`)
+            return
         }
 
         this.state.filters = Object.assign({}, this.state.filters, {[name]: value})
@@ -90,26 +90,39 @@ export default class SearchStore {
             return
         }
 
+        return this._submit().then(data => {
+            this._results = data.data
+            this.pagination = data
+
+            return data
+        })
+    }
+
+    loadMore() {
+        return this._submit().then(data => {
+            this._results = this._results.concat(data.data)
+            this.pagination = data
+
+            return data
+        })
+    }
+
+    _submit() {
         this.isLoading = true
 
-        return new Promise((resolve, reject) => {
-            const params = pickBy(this.state.filters, f => f)
+        const params = pickBy(this.state.filters, f => f)
 
-            this._http.get(this._url, {params})
-                .then(({data}) => {
-                    this._results = data.data
-                    this.pagination = data
+        return this._http.get(this._url, {params})
+            .then(({data}) => {
+                this.isLoading = false
+                this.isFirstLoad = false
+                return data
+            })
+            .catch(error => {
+                this.isLoading = false
 
-                    this.isLoading = false
-                    this.isFirstLoad = false
-                    resolve(data)
-                })
-                .catch(error => {
-                    this.isLoading = false
-
-                    reject(error)
-                })
-        })
+                return error
+            })
     }
 
     set pagination(data) {

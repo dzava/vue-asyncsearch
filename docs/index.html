@@ -56,14 +56,16 @@
                     Reset first_name only
                 </as-clear>
 
-                <div class="relative overflow-y-auto ba b--light-gray pa2" style="height: 65vh">
+                <as-load-more class="input-reset relative pa2 bg-white br1 ba b--black-20 pointer"></as-load-more>
+
+                <div class="relative ba b--light-gray pa2">
                     <as-loading class="absolute absolute--fill bg-white-80">
                         <div class="loading-indicator"></div>
                     </as-loading>
 
                     <as-no-results class="mt4 tc"></as-no-results>
 
-                    <as-results>
+                    <as-results class="overflow-y-auto" style="height: 65vh">
                         <div class="flex items-center" slot-scope="{ result: user }">
                             <img class="br-100 mr3 pa1 ba b--black-10 h3 w3" :src="user.picture"
                                  :alt="`user.first_name user.last_name 's avatar`">

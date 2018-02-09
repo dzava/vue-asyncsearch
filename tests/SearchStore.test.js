@@ -95,4 +95,21 @@ describe('SearchStore', () => {
         expect(store.results).toEqual([{name: 'John Doe'}, {name: 'John Roe'}])
         expect(store.pagination).toEqual({last_page: 5, current_page: 3})
     })
+
+    it('will append the results on load more', async () => {
+        const mockAdapter = new MockAdapter(axios)
+        mockAdapter.onGet('/users', {name: 'John'}).reply(200, {
+            data: [{name: 'John Doe'}, {name: 'John Roe'}],
+            last_page: 5,
+            current_page: 3
+        })
+        store = new Store('/users', {http: axios})
+        store._results = [{name: 'Jane Doe'}]
+
+        store.start()
+        await store.loadMore()
+
+        expect(store.results).toEqual([{name: 'Jane Doe'}, {name: 'John Doe'}, {name: 'John Roe'}])
+        expect(store.pagination).toEqual({last_page: 5, current_page: 3})
+    })
 })
