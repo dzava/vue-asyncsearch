@@ -8,6 +8,7 @@ import Pagination from './components/Pagination'
 import RefinementList from './components/RefinementList'
 import Results from './components/Results'
 import Search from './components/Search'
+import SearchButton from './components/SearchButton'
 import SearchStore from './SearchStore'
 
 const AsyncSearch = {
@@ -21,6 +22,7 @@ const AsyncSearch = {
     RefinementList,
     Results,
     Search,
+    SearchButton,
 
     install(Vue) {
         Vue.component('as-clear', Clear)
@@ -33,6 +35,7 @@ const AsyncSearch = {
         Vue.component('as-refinement-list', RefinementList)
         Vue.component('as-results', Results)
         Vue.component('as-search', Search)
+        Vue.component('as-search-button', SearchButton)
     },
 }
 
@@ -48,6 +51,7 @@ export {
     Pagination,
     RefinementList,
     Results,
-    SearchStore,
     Search,
+    SearchButton,
+    SearchStore,
 }
