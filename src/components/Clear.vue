@@ -13,7 +13,7 @@
     export default {
         inject: ['searchStore'],
         props: {
-            filters: {
+            params: {
                 type: Array,
                 default() {
                     return []
@@ -25,10 +25,10 @@
         },
         methods: {
             clear() {
-                if (this.filters.length) {
+                if (this.params.length) {
                     this.searchStore.stop()
 
-                    this.filters.forEach(f => this.searchStore.resetFilter(f))
+                    this.params.forEach(p => this.searchStore.resetQueryParam(p))
 
                     this.searchStore.start()
                     this.searchStore.search()

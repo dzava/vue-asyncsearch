@@ -18,16 +18,16 @@
                 <div class="flex">
                     <as-input name="first_name" placeholder="First name"
                               class="input-reset border-box pa2 mb2 mr3 w-100 mw-100 ba b--black-20"
-                              :reset-filters="['page']"></as-input>
+                              :reset-params="['page']"></as-input>
 
                     <as-input name="last_name" placeholder="Last name"
                               class="input-reset border-box pa2 mb2 w-100 mw-100 ba b--black-20"
-                              :reset-filters="['page']"></as-input>
+                              :reset-params="['page']"></as-input>
                 </div>
 
                 <as-refinement-list name="role"
                                     class="tc pv2"
-                                    :reset-filters="['page']"
+                                    :reset-params="['page']"
                                     :default-value="[]"
                                     :options="[
                                         {label: 'Administrators', value: 'admin'},
@@ -38,7 +38,7 @@
 
                 <as-filter-by-selector class="pa2 mb2 ba b--black-20 bg-white"
                                        name="per_page"
-                                       :reset-filters="['page']"
+                                       :reset-params="['page']"
                                        :default-value="5"
                                        :options="[
                                             {label: '3 users per page', value: 3},
@@ -48,11 +48,11 @@
                 ]"></as-filter-by-selector>
 
                 <as-clear class="input-reset relative pa2 bg-white br1 ba b--black-20 pointer">
-                    Reset filters
+                    Reset params
                 </as-clear>
 
                 <as-clear class="input-reset relative pa2 bg-white br1 ba b--black-20 pointer"
-                          :filters="['first_name']">
+                          :params="['first_name']">
                     Reset first_name only
                 </as-clear>
 

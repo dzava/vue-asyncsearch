@@ -6,9 +6,10 @@ export default {
             required: true,
         },
         defaultValue: {
-            required: true,
+            default: '',
         },
-        resetFilters: {
+        resetParams: {
+            type: Array,
             default() {
                 return []
             },
@@ -17,13 +18,13 @@ export default {
     computed: {
         value: {
             get() {
-                return this.searchStore.getFilter(this.name)
+                return this.searchStore.getQueryParam(this.name)
             },
             set(value) {
                 this.searchStore.stop()
 
-                this.searchStore.setFilter(this.name, value)
-                this.resetFilters.forEach(filter => this.searchStore.resetFilter(filter))
+                this.searchStore.setQueryParam(this.name, value)
+                this.resetParams.forEach(param => this.searchStore.resetQueryParam(param))
 
                 this.searchStore.start()
                 this.searchStore.search()
@@ -31,6 +32,6 @@ export default {
         },
     },
     created() {
-        this.searchStore.registerFilter(this.name, this.defaultValue)
+        this.searchStore.addQueryParam(this.name, this.defaultValue)
     },
 }

@@ -44,7 +44,7 @@ Vue.use(AsyncSearch);
 
 	 <as-input name="username"
      		   placeholder="Search for users by their username"
-               :reset-filters="['page']"></as-input>
+               :reset-params="['page']"></as-input>
 
      <as-filter-by-selector name="per_page"
                             :default-value="5"
@@ -77,28 +77,27 @@ pagination information.
 * `store-config`: a [Configuraton](#configuration) object
 
 `as-input`:
-* `name`: (required) the query parameter this filter is corresponds to. Giving this prop a value of `first_name`
+* `name`: (required) the query parameter name this input value will be assigned to. Giving this prop a value of `first_name`
 then a query parameter with the value of the input will be appended to the query
-* `default-value`: The default value of the filter, this value is used when resetting the filters using the `as-clear` component
-* `reset-filters`: An array of filter names to reset when this filter's value changes
+* `default-value`: The default value of the parameter, this value is used when resetting the parameters using the `as-clear` component
+* `reset-params`: An array of param names to reset when this params's value changes
 
 `as-filter-by-selector`:
 * `name`: (required) same as `as-input`
-then a query parameter with the value of the input will be appended to the query
 * `options`: an array of objects in the following format `{label: '', value: ''}`
-* `default-value`: The default value of the filter, this value is used when resetting the filters using the `as-clear` component. The value here should match the value key of one of the options
-* `reset-filters`: An array of filter names to reset when this filter's value changes
+* `default-value`: The default value of the param, this value is used when resetting the parameters using the `as-clear` component. The value here should match the value key of one of the options
+* `reset-params`: An array of param names to reset when this param's value changes
 
 
 `as-refinement-list`:
 * `name`: (required) same as `as-input`, but the query parameter will be an array
 * `options`: an array of objects in the following format `{label: '', value: ''}`
-* `default-value`: The default value of the filter, this value is used when resetting the filters using the `as-clear` component. The value must be an array with each element being the value of one of the options that should be enabled
-* `reset-filters`: An array of filter names to reset when this filter's value changes
+* `default-value`: The default value of the param, this value is used when resetting the parameters using the `as-clear` component. The value must be an array with each element
+being the value of one of the options that should be enabled by default
+* `reset-params`: An array of param names to reset when this param's value changes
 
 `as-clear`:
-* `filters`: an array of filter names to reset when the button is clicked. If no value is provided then all filters will be reset
-
+* `params`: an array of parameter names to reset when the button is clicked. If no value is provided then all parameters will be reset
 
 ### Configuration
 
@@ -110,8 +109,8 @@ The library must provide a `get` method which will receive the `url`, and an obj
 ```js
 {
     params: {
-    	filter1; value,
-        filter2; value,
+    	param1; value,
+        param2; value,
     }
 }
 ```

@@ -10,8 +10,8 @@ Vue.component('as-debug', {
     computed: {
         url() {
             const params = new URLSearchParams()
-            for (var k in this.searchStore.state.filters) {
-                let value = this.searchStore.state.filters[k]
+            for (var k in this.searchStore.state.params) {
+                let value = this.searchStore.state.params[k]
                 if (!value) {
                     continue
                 }

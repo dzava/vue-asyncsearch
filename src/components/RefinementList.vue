@@ -14,10 +14,10 @@
 </template>
 
 <script>
-    import FilterMixin from '../mixins/FilterMixin'
+    import ParamMixin from '../mixins/ParamMixin'
 
     export default {
-        mixins: [FilterMixin],
+        mixins: [ParamMixin],
         props: {
             options: {
                 type: Array,

@@ -13,13 +13,18 @@
 </template>
 
 <script>
+    import ParamMixin from '../mixins/ParamMixin'
+
     export default {
-        inject: ['searchStore'],
+        mixins: [ParamMixin],
         props: {
             name: {
                 default: 'page',
                 type: String,
             },
+            defaultValue: {
+                default: 1,
+            }
         },
         computed: {
             current() {
@@ -30,14 +35,6 @@
             },
             isLoading() {
                 return this.searchStore.isLoading
-            },
-            value: {
-                get() {
-                    return this.searchStore.getFilter(this.name)
-                },
-                set(value) {
-                    this.searchStore.setFilter(this.name, value)
-                },
             },
         },
         methods: {
@@ -52,9 +49,6 @@
 
                 this.searchStore.start()
             },
-        },
-        created() {
-            this.searchStore.registerFilter(this.name, 1)
         },
     }
 </script>

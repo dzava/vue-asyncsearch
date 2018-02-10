@@ -565,12 +565,12 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
             this._url = url;
             this._results = [];
             this._stoppedCounter = 1;
-            this._filterDefaults = {};
+            this._paramDefaults = {};
             this._pagination = { last_page: 0, current_page: 1 };
 
             this.isFirstLoad = true;
             this.isLoading = false;
-            this.state = { filters: {} };
+            this.state = { params: {} };
 
             this._options = Object.assign({
                 pagination: { last_page: 'last_page', current_page: 'current_page' }
@@ -578,41 +578,41 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
         }
 
         (0, _createClass3.default)(SearchStore, [{
-            key: 'registerFilter',
+            key: 'addQueryParam',
             value: function registerFilter(name, value) {
-                if (this.state.filters[name] !== undefined) {
+                if (this.state.params[name] !== undefined) {
                     throw new Error('Filter \'' + name + '\' is already registered');
                 }
 
-                this.state.filters = Object.assign({}, this.state.filters, (0, _defineProperty3.default)({}, name, value));
+                this.state.params = Object.assign({}, this.state.params, (0, _defineProperty3.default)({}, name, value));
 
-                this._filterDefaults[name] = value;
+                this._paramDefaults[name] = value;
             }
         }, {
-            key: 'setFilter',
+            key: 'setQueryParam',
             value: function setFilter(name, value) {
-                this.guardAgainstUnknownFilter(name);
+                this.guardAgainstUnknownParam(name);
                 this.stop();
 
-                this.state.filters[name] = value;
+                this.state.params[name] = value;
 
                 this.start();
                 this.search();
             }
         }, {
-            key: 'getFilter',
+            key: 'getQueryParam',
             value: function getFilter(name) {
-                this.guardAgainstUnknownFilter(name);
+                this.guardAgainstUnknownParam(name);
 
-                return this.state.filters[name];
+                return this.state.params[name];
             }
         }, {
-            key: 'resetFilter',
+            key: 'resetQueryParam',
             value: function resetFilter(filter) {
-                this.guardAgainstUnknownFilter(filter);
+                this.guardAgainstUnknownParam(filter);
                 this.stop();
 
-                this.state.filters[filter] = this._filterDefaults[filter];
+                this.state.params[filter] = this._paramDefaults[filter];
 
                 this.start();
             }
@@ -621,12 +621,12 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
             value: function clear() {
                 this.stop();
 
-                for (var filter in this.state.filters) {
-                    if (!this.state.filters.hasOwnProperty(filter)) {
+                for (var filter in this.state.params) {
+                    if (!this.state.params.hasOwnProperty(filter)) {
                         continue;
                     }
 
-                    this.resetFilter(filter);
+                    this.resetQueryParam(filter);
                 }
 
                 this.start();
@@ -658,7 +658,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
                 this.isLoading = true;
 
                 return new Promise(function (resolve, reject) {
-                    var params = pickBy(_this.state.filters, function (f) {
+                    var params = pickBy(_this.state.params, function (f) {
                         return f;
                     });
 
@@ -679,10 +679,10 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
                 });
             }
         }, {
-            key: 'guardAgainstUnknownFilter',
+            key: 'guardAgainstUnknownParam',
             value: function guardAgainstUnknownFilter(filter) {
-                if (this.state.filters[filter] === undefined) {
-                    throw new Error('No such filter \'' + filter + '\', call \'registerFilter\' first');
+                if (this.state.params[filter] === undefined) {
+                    throw new Error('No such filter \'' + filter + '\', call \'addQueryParam\' first');
                 }
             }
         }, {
@@ -754,7 +754,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
             defaultValue: {
                 required: true
             },
-            resetFilters: {
+            resetParams: {
                 default: function _default() {
                     return [];
                 }
@@ -763,16 +763,16 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
         computed: {
             value: {
                 get: function get() {
-                    return this.searchStore.getFilter(this.name);
+                    return this.searchStore.getQueryParam(this.name);
                 },
                 set: function set(value) {
                     var _this = this;
 
                     this.searchStore.stop();
 
-                    this.searchStore.setFilter(this.name, value);
-                    this.resetFilters.forEach(function (filter) {
-                        return _this.searchStore.resetFilter(filter);
+                    this.searchStore.setQueryParam(this.name, value);
+                    this.resetParams.forEach(function (filter) {
+                        return _this.searchStore.resetQueryParam(filter);
                     });
 
                     this.searchStore.start();
@@ -781,7 +781,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
             }
         },
         created: function created() {
-            this.searchStore.registerFilter(this.name, this.defaultValue);
+            this.searchStore.addQueryParam(this.name, this.defaultValue);
         }
     };
 });
@@ -4834,10 +4834,10 @@ function renderSlot (
 /*  */
 
 /**
- * Runtime helper for resolving filters
+ * Runtime helper for resolving params
  */
 function resolveFilter (id) {
-  return resolveAsset(this.$options, 'filters', id, true) || identity
+  return resolveAsset(this.$options, 'params', id, true) || identity
 }
 
 /*  */
@@ -11939,8 +11939,8 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
         computed: {
             url: function url() {
                 var params = new URLSearchParams();
-                for (var k in this.searchStore.state.filters) {
-                    var value = this.searchStore.state.filters[k];
+                for (var k in this.searchStore.state.params) {
+                    var value = this.searchStore.state.params[k];
                     if (!value) {
                         continue;
                     }
@@ -12330,7 +12330,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
     exports.default = {
         inject: ['searchStore'],
         props: {
-            filters: {
+            params: {
                 type: Array,
                 default: function _default() {
                     return [];
@@ -12344,11 +12344,11 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
             clear: function clear() {
                 var _this = this;
 
-                if (this.filters.length) {
+                if (this.params.length) {
                     this.searchStore.stop();
 
-                    this.filters.forEach(function (f) {
-                        return _this.searchStore.resetFilter(f);
+                    this.params.forEach(function (f) {
+                        return _this.searchStore.resetQueryParam(f);
                     });
 
                     this.searchStore.start();
@@ -12440,7 +12440,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
             defaultValue: {
                 default: ''
             },
-            resetFilters: {
+            resetParams: {
                 default: function _default() {
                     return [];
                 }
@@ -12449,16 +12449,16 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
         computed: {
             value: {
                 get: function get() {
-                    return this.searchStore.getFilter(this.name);
+                    return this.searchStore.getQueryParam(this.name);
                 },
                 set: function set(value) {
                     var _this = this;
 
                     this.searchStore.stop();
 
-                    this.searchStore.setFilter(this.name, value);
-                    this.resetFilters.forEach(function (filter) {
-                        return _this.searchStore.resetFilter(filter);
+                    this.searchStore.setQueryParam(this.name, value);
+                    this.resetParams.forEach(function (filter) {
+                        return _this.searchStore.resetQueryParam(filter);
                     });
 
                     this.searchStore.start();
@@ -12472,7 +12472,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
             }, 300)
         },
         created: function created() {
-            this.searchStore.registerFilter(this.name, this.defaultValue);
+            this.searchStore.addQueryParam(this.name, this.defaultValue);
         }
     };
 });
@@ -12598,10 +12598,10 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
             value: {
                 get: function get() {
-                    return this.searchStore.getFilter(this.name);
+                    return this.searchStore.getQueryParam(this.name);
                 },
                 set: function set(value) {
-                    this.searchStore.setFilter(this.name, value);
+                    this.searchStore.setQueryParam(this.name, value);
                 }
             }
         },
@@ -12611,7 +12611,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
             }
         },
         created: function created() {
-            this.searchStore.registerFilter(this.name, 1);
+            this.searchStore.addQueryParam(this.name, 1);
         }
     };
 });

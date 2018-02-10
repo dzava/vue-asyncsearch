@@ -7,12 +7,12 @@ export default class SearchStore {
         this._url = url
         this._results = []
         this._stoppedCounter = 1
-        this._filterDefaults = {}
+        this._paramDefaults = {}
         this._pagination = {last_page: 0, current_page: 1}
 
         this.isFirstLoad = true
         this.isLoading = false
-        this.state = {filters: {}}
+        this.state = {params: {}}
 
         this._options = Object.assign({
             pagination: {last_page: 'last_page', current_page: 'current_page'},
@@ -23,37 +23,37 @@ export default class SearchStore {
         return this._options.http || window.axios
     }
 
-    registerFilter(name, value) {
-        if (this.state.filters[name] !== undefined) {
+    addQueryParam(name, value) {
+        if (this.state.params[name] !== undefined) {
             return
         }
 
-        this.state.filters = Object.assign({}, this.state.filters, {[name]: value})
+        this.state.params = Object.assign({}, this.state.params, {[name]: value})
 
-        this._filterDefaults[name] = value
+        this._paramDefaults[name] = value
     }
 
-    setFilter(name, value) {
-        this.guardAgainstUnknownFilter(name)
+    setQueryParam(name, value) {
+        this.guardAgainstUnknownParam(name)
         this.stop()
 
-        this.state.filters[name] = value
+        this.state.params[name] = value
 
         this.start()
         this.search()
     }
 
-    getFilter(name) {
-        this.guardAgainstUnknownFilter(name)
+    getQueryParam(name) {
+        this.guardAgainstUnknownParam(name)
 
-        return this.state.filters[name]
+        return this.state.params[name]
     }
 
-    resetFilter(filter) {
-        this.guardAgainstUnknownFilter(filter)
+    resetQueryParam(param) {
+        this.guardAgainstUnknownParam(param)
         this.stop()
 
-        this.state.filters[filter] = this._filterDefaults[filter]
+        this.state.params[param] = this._paramDefaults[param]
 
         this.start()
     }
@@ -61,12 +61,12 @@ export default class SearchStore {
     clear() {
         this.stop()
 
-        for (const filter in this.state.filters) {
-            if (!this.state.filters.hasOwnProperty(filter)) {
+        for (const param in this.state.params) {
+            if (!this.state.params.hasOwnProperty(param)) {
                 continue
             }
 
-            this.resetFilter(filter)
+            this.resetQueryParam(param)
         }
 
         this.start()
@@ -110,7 +110,7 @@ export default class SearchStore {
     _submit() {
         this.isLoading = true
 
-        const params = pickBy(this.state.filters, f => f)
+        const params = pickBy(this.state.params, f => f)
 
         return this._http.get(this._url, {params})
             .then(({data}) => {
@@ -147,9 +147,9 @@ export default class SearchStore {
         this._results = value
     }
 
-    guardAgainstUnknownFilter(filter) {
-        if (this.state.filters[filter] === undefined) {
-            throw new Error(`No such filter '${filter}', call 'registerFilter' first`)
+    guardAgainstUnknownParam(param) {
+        if (this.state.params[param] === undefined) {
+            throw new Error(`No such parameter '${param}', call 'registerQueryParam' first`)
         }
     }
 }

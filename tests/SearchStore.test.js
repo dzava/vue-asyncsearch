@@ -7,7 +7,7 @@ let store
 describe('SearchStore', () => {
     beforeEach(() => {
         store = new Store('test.example.com/users')
-        store.registerFilter('name', 'John')
+        store.addQueryParam('name', 'John')
     })
 
     it('can accept a custom http instance in options', () => {
@@ -35,48 +35,48 @@ describe('SearchStore', () => {
         expect(store.pagination).toEqual({last_page: 3, current_page: 2})
     })
 
-    it('can register a new filter', () => {
-        store.registerFilter('role', 'developer')
+    it('can register a new param', () => {
+        store.addQueryParam('role', 'developer')
 
-        expect(store.getFilter('role')).toBe('developer')
+        expect(store.getQueryParam('role')).toBe('developer')
     })
 
-    it('can set a filters value', () => {
-        expect(store.getFilter('name')).toBe('John')
+    it('can set a params value', () => {
+        expect(store.getQueryParam('name')).toBe('John')
 
-        store.setFilter('name', 'John Doe')
+        store.setQueryParam('name', 'John Doe')
 
-        expect(store.getFilter('name')).toBe('John Doe')
+        expect(store.getQueryParam('name')).toBe('John Doe')
     })
 
-    it('can reset a filter to the default value', () => {
-        store.setFilter('name', 'John Doe')
-        expect(store.getFilter('name')).toBe('John Doe')
+    it('can reset a param to the default value', () => {
+        store.setQueryParam('name', 'John Doe')
+        expect(store.getQueryParam('name')).toBe('John Doe')
 
-        store.resetFilter('name')
-        expect(store.getFilter('name')).toBe('John')
+        store.resetQueryParam('name')
+        expect(store.getQueryParam('name')).toBe('John')
     })
 
-    it('can reset all filters', () => {
-        store.registerFilter('role', 'user')
-        store.setFilter('role', 'developer')
-        store.setFilter('name', 'John Doe')
+    it('can reset all params', () => {
+        store.addQueryParam('role', 'user')
+        store.setQueryParam('role', 'developer')
+        store.setQueryParam('name', 'John Doe')
 
         store.clear()
 
-        expect(store.getFilter('name')).toBe('John')
-        expect(store.getFilter('role')).toBe('user')
+        expect(store.getQueryParam('name')).toBe('John')
+        expect(store.getQueryParam('role')).toBe('user')
     })
 
-    it('throws when setting an unknown filter', () => {
+    it('throws when setting an unknown param', () => {
         expect(() => {
-            store.setFilter('unknown', 'value')
+            store.setQueryParam('unknown', 'value')
         }).toThrow()
     })
 
-    it('throws when retrieving an unknown filter', () => {
+    it('throws when retrieving an unknown param', () => {
         expect(() => {
-            store.getFilter('unknown')
+            store.getQueryParam('unknown')
         }).toThrow()
     })
 
