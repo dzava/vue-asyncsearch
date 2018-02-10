@@ -1,5 +1,3 @@
-import axios from 'axios'
-import MockAdapter from 'axios-mock-adapter'
 import Store from '../src/SearchStore'
 
 let store
@@ -11,11 +9,11 @@ describe('SearchStore', () => {
     })
 
     it('can accept a custom http instance in options', () => {
-        const http = axios.create({baseURL: 'http://example.com'})
+        const http = jest.fn()
 
         store = new Store('/users', {http})
 
-        expect(store._http.defaults.baseURL).toBe('http://example.com')
+        expect(store._http).toBe(http)
 
         window.axios = {defaults: {baseURL: 'not-a-real-axios'}}
         store = new Store('/users')
@@ -83,36 +81,48 @@ describe('SearchStore', () => {
     })
 
     it('will update the results and pagination on refresh', async () => {
-        const mockAdapter = new MockAdapter(axios)
-        mockAdapter.onGet('/users', {name: 'John'}).reply(200, {
+        const http = getHttpMock({
             data: [{name: 'John Doe'}, {name: 'John Roe'}],
             last_page: 5,
             current_page: 3,
         })
-        store = new Store('/users', {http: axios})
+        store = new Store('/users', {http})
+        expect(store.results).toEqual([])
 
         store.start()
         await store.refresh()
 
+        expect(http.get).toHaveBeenCalledTimes(1)
+        expect(http.get).toHaveBeenCalledWith('/users', {params: {}})
         expect(store.results).toEqual([{name: 'John Doe'}, {name: 'John Roe'}])
         expect(store.pagination).toEqual({last_page: 5, current_page: 3})
+
     })
 
     it('will append the results on load more', async () => {
-        const mockAdapter = new MockAdapter(axios)
-        mockAdapter.onGet('/users', {name: 'John'}).reply(200, {
-            data: [{name: 'John Doe'}, {name: 'John Roe'}],
-            last_page: 5,
-            current_page: 3,
-        })
-        store = new Store('/users', {http: axios})
+        const http = getHttpMock({data: [{name: 'John Doe'}, {name: 'John Roe'}]})
+        store = new Store('/users', {http})
         store._results = [{name: 'Jane Doe'}]
 
         store.start()
         await store.loadMore()
 
+        expect(http.get).toHaveBeenCalledTimes(1)
+        expect(http.get).toHaveBeenCalledWith('/users', {params: {}})
         expect(store.results).toEqual([{name: 'Jane Doe'}, {name: 'John Doe'}, {name: 'John Roe'}])
-        expect(store.pagination).toEqual({last_page: 5, current_page: 3})
+    })
+
+    it('will pass the parameters to the http client on refresh', async () => {
+        const http = getHttpMock()
+        store = new Store('/users', {http})
+        store.addQueryParam('first_name', 'Jane')
+        store.addQueryParam('last_name', 'Doe')
+
+        store.start()
+        await store.loadMore()
+
+        expect(http.get).toHaveBeenCalledTimes(1)
+        expect(http.get).toHaveBeenCalledWith('/users', {params: {first_name: 'Jane', last_name: 'Doe'}})
     })
 
     it('refreshes only once while resetting multiple params', () => {
@@ -161,10 +171,10 @@ describe('SearchStore', () => {
     })
 })
 
-const getHttpMock = () => {
+const getHttpMock = (data = {data: []}) => {
     const getMock = jest.fn()
     getMock.mockReturnValue(new Promise((resolve, reject) => {
-        resolve({data: {data: []}})
+        resolve({data})
     }))
 
     const mock = jest.fn().mockImplementation(() => {
