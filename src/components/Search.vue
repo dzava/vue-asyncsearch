@@ -33,17 +33,35 @@
                     return this.localSearchStore
                 },
             },
-            storeConfig: {
+            http: {
+                default() {
+                    return this.$http || window.axios
+                },
+            },
+            pagination: {
                 type: Object,
                 default() {
-                    return {}
+                    return {last_page: 'last_page', current_page: 'current_page'}
                 },
+            },
+            refreshOnParamChange: {
+                type: Boolean,
+                default: true,
             },
         },
         data() {
             return {
                 localSearchStore: null,
             }
+        },
+        computed: {
+            storeConfig() {
+                return {
+                    http: this.http,
+                    pagination: this.pagination,
+                    refreshOnParamChange: this.refreshOnParamChange,
+                }
+            },
         },
         mounted() {
             this.localSearchStore.start()

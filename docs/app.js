@@ -31,15 +31,7 @@ Vue.component('as-debug', {
 new Vue({
     el: '#app',
     data: {
-        storeConfig: {
-            http: new Http(),
-            pagination: {
-                last_page: 'pagination.last_page',
-                current_page: 'pagination.current_page',
-                per_page: 'pagination.per_page',
-            },
-            refreshOnParamChange: true,
-        },
+        http: new Http(),
     },
     components: {AsyncSearch},
 })
