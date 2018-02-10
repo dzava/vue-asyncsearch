@@ -71,40 +71,82 @@ The response must be a json response and contain a `data` key with the array of 
 pagination information.
 
 
-### Props
-`as-search`:
+### Components
+#### `as-search`:
+A wrapper component that allows you to configure the search endpoint and provides the search state to it's children.
+All other components must be children of this component.
+##### Props
 * `url`: (required) The endpoint that will be used to fetch the data
-* `store-config`: a [Configuraton](#configuration) object
+* `http`: the library which will be used to perform the requests. see [Configuraton](#configuration) for more information
+* `pagination`: an object that describes how to extract pagination information from the response. see [Configuraton](#configuration) for more information
+* `refresh-on-param-change`: a boolean indicating whether the results should be refreshed after a parameter value changes. default: `true`
 
-`as-input`:
-* `name`: (required) the query parameter name this input value will be assigned to. Giving this prop a value of `first_name`
-then a query parameter with the value of the input will be appended to the query
+#### `as-results`:
+Renders when there are results and provides access to the results
+
+#### `as-input`:
+A simple text input that will update the parameter value as its value changes.
+##### Props
+* `name`: (required) the query parameter name this input value will be assigned to.
 * `default-value`: The default value of the parameter, this value is used when resetting the parameters using the `as-clear` component
-* `reset-params`: An array of param names to reset when this params's value changes
+* `reset-params`: An array of param names to reset when this param's value changes
+* `refresh-on-change`: a boolean indicating whether the results should be refreshed when the value changes. Default's to the value of the `refresh-on-param-change` prop of the `as-search` component.
+* `delay`: the delay (in milliseconds), since the last time the value changed, after which the results will be refreshed
 
-`as-filter-by-selector`:
+#### `as-filter-by-selector`:
+A component that allows setting a param from a list of values
+##### Props
 * `name`: (required) same as `as-input`
 * `options`: an array of objects in the following format `{label: '', value: ''}`
 * `default-value`: The default value of the param, this value is used when resetting the parameters using the `as-clear` component. The value here should match the value key of one of the options
 * `reset-params`: An array of param names to reset when this param's value changes
+* `refresh-on-param-change`: same as `as-input`
 
 
-`as-refinement-list`:
+#### `as-refinement-list`:
+
+##### Props
 * `name`: (required) same as `as-input`, but the query parameter will be an array
 * `options`: an array of objects in the following format `{label: '', value: ''}`
 * `default-value`: The default value of the param, this value is used when resetting the parameters using the `as-clear` component. The value must be an array with each element
 being the value of one of the options that should be enabled by default
 * `reset-params`: An array of param names to reset when this param's value changes
+* `refresh-on-param-change`: same as `as-input`
 
-`as-clear`:
+#### `as-clear`:
+A button used to reset parameters to their default value
+##### Props
 * `params`: an array of parameter names to reset when the button is clicked. If no value is provided then all parameters will be reset
+
+#### `as-loading`:
+A component that is rendered while fetching results
+##### Props
+* `message`: the message to display. defailt: `'Loading...'`
+
+#### `as-load-more`:
+A button that, will increase the param value by one, perform a new request and append the response data to the results.
+##### Props
+* `name`: (required) same as `as-input`. default: `page`
+* `default-value`: same as `as-input`. default: `1`
+* `resetParams`: same as `as-input`
+
+#### `as-pagination`:
+A list of links to navigate paginated results
+##### Props
+Same as `as-load-more`.
+
+#### `as-no-results`:
+A component that renders when there are no results in the response
+
+#### `as-search-button`:
+A button that refreshes the results
 
 ### Configuration
 
 *http*
 
-If you don't specify an http library then `window.axios` will be used.
-You can provide your own library using the, `http` key object passed to the `store-config` prop of the `as-search` component.
+If you don't specify an http library then `vm.$http` or `window.axios` will be used.
+You can provide your own library using the, `http` prop of the `as-search` component.
 The library must provide a `get` method which will receive the `url`, and an object, with the following structure:
 ```js
 {
@@ -128,18 +170,16 @@ It must return a promise which when resolved will provide an object with a `data
 *pagination*
 
 In order for the pagination component to work correctly it needs to know the current and last page of the paginated results.
-By default the `last_page` and `current_page` fields of the response are used. You can use the `pagination` property of the
-configuration object to provide a mapping for your specific case. For example given the following response
+By default the `last_page` and `current_page` fields of the response are used. You can use the `pagination` prop of the
+`as-search` component to provide a mapping for your specific case. For example given the following response
 ```js
 { data: [...], pagination: { current: 2, total: 5 } }
 ```
 you would use the following configuration object
 ```js
 {
-	pagination: {
-        last_page: 'pagination.total',
-        current_page: 'pagination.total'
-    }
+    last_page: 'pagination.total',
+    current_page: 'pagination.total'
 }
 ```
 
