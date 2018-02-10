@@ -38,6 +38,7 @@ new Vue({
                 current_page: 'pagination.current_page',
                 per_page: 'pagination.per_page',
             },
+            refreshOnParamChange: true,
         },
     },
     components: {AsyncSearch},

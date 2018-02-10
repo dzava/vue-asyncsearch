@@ -47,7 +47,7 @@
         },
         mounted() {
             this.localSearchStore.start()
-            this.localSearchStore.search()
+            this.localSearchStore.refresh()
         },
     }
 </script>

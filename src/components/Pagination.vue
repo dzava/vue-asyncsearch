@@ -17,26 +17,10 @@
 
 <script>
     import ParamMixin from '../mixins/ParamMixin'
+    import PaginationMixin from '../mixins/PaginationMixin'
 
     export default {
-        mixins: [ParamMixin],
-        props: {
-            name: {
-                default: 'page',
-                type: String,
-            },
-            defaultValue: {
-                default: 1,
-            },
-        },
-        computed: {
-            current() {
-                return this.searchStore.pagination.current_page
-            },
-            total() {
-                return this.searchStore.pagination.last_page
-            },
-        },
+        mixins: [ParamMixin, PaginationMixin],
         methods: {
             page(page) {
                 this.value = page

@@ -17,7 +17,7 @@ describe('SearchStore', () => {
 
         expect(store._http.defaults.baseURL).toBe('http://example.com')
 
-        window.axios = { defaults: {baseURL: 'not-a-real-axios'}  }
+        window.axios = {defaults: {baseURL: 'not-a-real-axios'}}
         store = new Store('/users')
 
         expect(store._http.defaults.baseURL).toBe('not-a-real-axios')
@@ -35,10 +35,12 @@ describe('SearchStore', () => {
         expect(store.pagination).toEqual({last_page: 3, current_page: 2})
     })
 
-    it('can register a new param', () => {
-        store.addQueryParam('role', 'developer')
+    it('can add a new param', () => {
+        store.addQueryParam('role', 'developer', {refreshOnChange: false})
 
         expect(store.getQueryParam('role')).toBe('developer')
+        expect(store._paramOptions.role.refreshOnChange).toBe(false)
+        expect(store._paramOptions.name.refreshOnChange).toBe(true)
     })
 
     it('can set a params value', () => {
@@ -80,17 +82,17 @@ describe('SearchStore', () => {
         }).toThrow()
     })
 
-    it('will update the results and pagination on search', async () => {
+    it('will update the results and pagination on refresh', async () => {
         const mockAdapter = new MockAdapter(axios)
         mockAdapter.onGet('/users', {name: 'John'}).reply(200, {
             data: [{name: 'John Doe'}, {name: 'John Roe'}],
             last_page: 5,
-            current_page: 3
+            current_page: 3,
         })
         store = new Store('/users', {http: axios})
 
         store.start()
-        await store.search()
+        await store.refresh()
 
         expect(store.results).toEqual([{name: 'John Doe'}, {name: 'John Roe'}])
         expect(store.pagination).toEqual({last_page: 5, current_page: 3})
@@ -101,7 +103,7 @@ describe('SearchStore', () => {
         mockAdapter.onGet('/users', {name: 'John'}).reply(200, {
             data: [{name: 'John Doe'}, {name: 'John Roe'}],
             last_page: 5,
-            current_page: 3
+            current_page: 3,
         })
         store = new Store('/users', {http: axios})
         store._results = [{name: 'Jane Doe'}]
@@ -112,4 +114,62 @@ describe('SearchStore', () => {
         expect(store.results).toEqual([{name: 'Jane Doe'}, {name: 'John Doe'}, {name: 'John Roe'}])
         expect(store.pagination).toEqual({last_page: 5, current_page: 3})
     })
+
+    it('refreshes only once while resetting multiple params', () => {
+        const http = getHttpMock()
+        store = new Store('/users', {http: http})
+        store.addQueryParam('role', 'user')
+        store.start()
+
+        store.clear()
+
+        expect(http.get).toHaveBeenCalledTimes(1)
+    })
+
+    it('will refresh when a param value changes', () => {
+        const http = getHttpMock()
+        store = new Store('/users', {http: http})
+        store.addQueryParam('name', 'John')
+        store.start()
+
+        store.setQueryParam('name', 'Jane')
+
+        expect(http.get).toHaveBeenCalledTimes(1)
+        expect(http.get).toHaveBeenCalledWith('/users', {params: {name: 'Jane'}})
+    })
+
+    it('can disable refresh on change for each param individually', () => {
+        const http = getHttpMock()
+        store = new Store('/users', {http: http})
+        store.addQueryParam('name', 'John', {refreshOnChange: false})
+        store.start()
+
+        store.setQueryParam('name', 'Jane')
+
+        expect(http.get).toHaveBeenCalledTimes(0)
+    })
+
+    it('will not refresh when a param changes and refreshOnParamChange is false', () => {
+        const http = getHttpMock()
+        store = new Store('/users', {http: http, refreshOnParamChange: false})
+        store.addQueryParam('name', 'John')
+        store.start()
+
+        store.setQueryParam('name', 'Jane')
+
+        expect(http.get).toHaveBeenCalledTimes(0)
+    })
 })
+
+const getHttpMock = () => {
+    const getMock = jest.fn()
+    getMock.mockReturnValue(new Promise((resolve, reject) => {
+        resolve({data: {data: []}})
+    }))
+
+    const mock = jest.fn().mockImplementation(() => {
+        return {get: getMock}
+    })
+
+    return new mock()
+}

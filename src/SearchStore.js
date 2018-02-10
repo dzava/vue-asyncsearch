@@ -8,6 +8,7 @@ export default class SearchStore {
         this._results = []
         this._stoppedCounter = 1
         this._paramDefaults = {}
+        this._paramOptions = {}
         this._pagination = {last_page: 0, current_page: 1}
 
         this.isFirstLoad = true
@@ -16,6 +17,7 @@ export default class SearchStore {
 
         this._options = Object.assign({
             pagination: {last_page: 'last_page', current_page: 'current_page'},
+            refreshOnParamChange: true,
         }, options)
     }
 
@@ -23,7 +25,7 @@ export default class SearchStore {
         return this._options.http || window.axios
     }
 
-    addQueryParam(name, value) {
+    addQueryParam(name, value, options) {
         if (this.state.params[name] !== undefined) {
             return
         }
@@ -31,16 +33,20 @@ export default class SearchStore {
         this.state.params = Object.assign({}, this.state.params, {[name]: value})
 
         this._paramDefaults[name] = value
+        this._paramOptions[name] = Object.assign({refreshOnChange: this._options.refreshOnParamChange}, options)
     }
 
     setQueryParam(name, value) {
         this.guardAgainstUnknownParam(name)
-        this.stop()
 
         this.state.params[name] = value
 
-        this.start()
-        this.search()
+        /* Determine if we should refresh the results because
+         * of a change in this params value
+         */
+        if (obj_get(this._paramOptions, `${name}.refreshOnChange`, this.getOption('refreshOnParamChange'))) {
+            this.refresh()
+        }
     }
 
     getQueryParam(name) {
@@ -51,11 +57,8 @@ export default class SearchStore {
 
     resetQueryParam(param) {
         this.guardAgainstUnknownParam(param)
-        this.stop()
 
-        this.state.params[param] = this._paramDefaults[param]
-
-        this.start()
+        this.setQueryParam(param, this._paramDefaults[param])
     }
 
     clear() {
@@ -70,7 +73,7 @@ export default class SearchStore {
         }
 
         this.start()
-        this.search()
+        this.refresh()
     }
 
     start() {
@@ -85,7 +88,7 @@ export default class SearchStore {
         this._stoppedCounter++
     }
 
-    search() {
+    refresh() {
         if (this._stoppedCounter !== 0) {
             return
         }
@@ -107,7 +110,16 @@ export default class SearchStore {
         })
     }
 
+    getOption(name) {
+        if (this._options[name] === undefined) {
+            throw new Error(`No such option '${name}'`)
+        }
+
+        return this._options[name]
+    }
+
     _submit() {
+        this.stop()
         this.isLoading = true
 
         const params = pickBy(this.state.params, f => f)
@@ -116,10 +128,13 @@ export default class SearchStore {
             .then(({data}) => {
                 this.isLoading = false
                 this.isFirstLoad = false
+                this.start()
+
                 return data
             })
             .catch(error => {
                 this.isLoading = false
+                this.start()
 
                 return error
             })

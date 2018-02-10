@@ -20,8 +20,9 @@
                               class="input-reset border-box pa2 mb2 mr3 w-100 mw-100 ba b--black-20"
                               :reset-params="['page']"></as-input>
 
-                    <as-input name="last_name" placeholder="Last name"
+                    <as-input name="last_name" placeholder="Last name (will not refresh when changed)"
                               class="input-reset border-box pa2 mb2 w-100 mw-100 ba b--black-20"
+                              :refresh-on-change="false"
                               :reset-params="['page']"></as-input>
                 </div>
 
@@ -39,6 +40,7 @@
                 <as-filter-by-selector class="pa2 mb2 ba b--black-20 bg-white"
                                        name="per_page"
                                        :reset-params="['page']"
+                                       :refresh-on-change="true"
                                        :default-value="5"
                                        :options="[
                                             {label: '3 users per page', value: 3},

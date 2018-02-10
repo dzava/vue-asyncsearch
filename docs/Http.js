@@ -11,6 +11,7 @@ export default class Http {
             results = results.slice(start, start + params.per_page)
 
             setTimeout(() => {
+                console.log('resolved');
                 resolve({
                     data: {
                         data: results,

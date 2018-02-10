@@ -31,7 +31,7 @@
                     this.params.forEach(p => this.searchStore.resetQueryParam(p))
 
                     this.searchStore.start()
-                    this.searchStore.search()
+                    this.searchStore.refresh()
                 } else {
                     this.searchStore.clear()
                 }

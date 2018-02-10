@@ -13,6 +13,12 @@
 
     export default {
         mixins: [ParamMixin],
+        props: {
+            delay: {
+                type: Number,
+                default: 500,
+            },
+        },
         computed: {
             value: {
                 get() {
@@ -20,19 +26,20 @@
                 },
                 set(value) {
                     this.searchStore.stop()
-
-                    this.searchStore.setQueryParam(this.name, value)
                     this.resetParams.forEach(param => this.searchStore.resetQueryParam(param))
 
+                    this.searchStore.setQueryParam(this.name, value)
                     this.searchStore.start()
-                    this.delayedSearch()
+                    if (this.refreshOnChange) {
+                        this.delayedSearch()
+                    }
                 },
             },
-        },
-        methods: {
-            delayedSearch: debounce(function () {
-                this.searchStore.search()
-            }, 300),
+            delayedSearch() {
+                return debounce(function () {
+                    this.searchStore.refresh()
+                }, this.delay)
+            },
         },
     }
 </script>

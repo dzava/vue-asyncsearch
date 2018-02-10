@@ -14,6 +14,12 @@ export default {
                 return []
             },
         },
+        refreshOnChange: {
+            type: Boolean,
+            default() {
+                return this.searchStore.getOption('refreshOnParamChange')
+            },
+        },
     },
     computed: {
         value: {
@@ -22,16 +28,14 @@ export default {
             },
             set(value) {
                 this.searchStore.stop()
+                this.resetParams.forEach(param => this.searchStore.resetQueryParam(param))
+                this.searchStore.start()
 
                 this.searchStore.setQueryParam(this.name, value)
-                this.resetParams.forEach(param => this.searchStore.resetQueryParam(param))
-
-                this.searchStore.start()
-                this.searchStore.search()
             },
         },
     },
     created() {
-        this.searchStore.addQueryParam(this.name, this.defaultValue)
+        this.searchStore.addQueryParam(this.name, this.defaultValue, {refreshOnChange: this.refreshOnChange})
     },
 }

@@ -14,29 +14,10 @@
 
 <script>
     import ParamMixin from '../mixins/ParamMixin'
+    import PaginationMixin from '../mixins/PaginationMixin'
 
     export default {
-        mixins: [ParamMixin],
-        props: {
-            name: {
-                default: 'page',
-                type: String,
-            },
-            defaultValue: {
-                default: 1,
-            }
-        },
-        computed: {
-            current() {
-                return this.searchStore.pagination.current_page
-            },
-            total() {
-                return this.searchStore.pagination.last_page
-            },
-            isLoading() {
-                return this.searchStore.isLoading
-            },
-        },
+        mixins: [ParamMixin, PaginationMixin],
         methods: {
             loadMore() {
                 if (this.value + 1 > this.total) {
