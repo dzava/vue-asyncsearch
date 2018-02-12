@@ -80,6 +80,7 @@ All other components must be children of this component.
 * `http`: the library which will be used to perform the requests. see [Configuraton](#configuration) for more information
 * `pagination`: an object that describes how to extract pagination information from the response. see [Configuraton](#configuration) for more information
 * `refresh-on-param-change`: a boolean indicating whether the results should be refreshed after a parameter value changes. default: `true`
+* `use-history`: a boolean indicating whether the query params should be added to the browser url. The url will also be used to set the values of the params
 
 #### `as-results`:
 Renders when there are results and provides access to the results

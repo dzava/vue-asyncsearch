@@ -48,6 +48,10 @@
                 type: Boolean,
                 default: true,
             },
+            useHistory: {
+                type: Boolean,
+                default: true,
+            },
         },
         data() {
             return {
@@ -60,6 +64,7 @@
                     http: this.http,
                     pagination: this.pagination,
                     refreshOnParamChange: this.refreshOnParamChange,
+                    useHistory: this.useHistory,
                 }
             },
         },

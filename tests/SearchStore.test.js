@@ -4,6 +4,7 @@ let store
 
 describe('SearchStore', () => {
     beforeEach(() => {
+        window.history.replaceState({}, '', '?')
         store = new Store('test.example.com/users')
         store.addQueryParam('name', 'John')
     })
@@ -168,6 +169,65 @@ describe('SearchStore', () => {
         store.setQueryParam('name', 'Jane')
 
         expect(http.get).toHaveBeenCalledTimes(0)
+    })
+
+    describe('History', () => {
+
+        it('will initialize from the url query params when useHistory is true', () => {
+            window.history.pushState({}, '', '?first_name=Jane&roles[]=admin&roles[]=moderator&page=2')
+            store = new Store('/users', {useHistory: true})
+            store.addQueryParam('first_name', 'John')
+                .addQueryParam('last_name', 'Doe')
+                .addQueryParam('roles[]', [])
+                .addQueryParam('page', 1)
+
+            expect(store.getQueryParam('first_name')).toBe('Jane')
+            expect(store.getQueryParam('last_name')).toBe('Doe')
+            expect(store.getQueryParam('roles[]')).toEqual(['admin', 'moderator'])
+            expect(store.getQueryParam('page')).toBe(2)
+        })
+
+        it('will update the url when useHistory is true', () => {
+            const http = getHttpMock()
+            store = new Store('/users', {http, refreshOnParamChange: false, useHistory: true})
+            store.addQueryParam('first_name', '')
+                .addQueryParam('last_name', '')
+                .addQueryParam('roles[]', [])
+                .start()
+            expect(window.location.search).toBe('')
+
+            store.setQueryParam('first_name', 'John')
+                .setQueryParam('last_name', 'Doe')
+                .setQueryParam('roles[]', ['admin', 'moderator'])
+                .refresh()
+
+            expect(window.location.search).toBe(encodeURI('?first_name=John&last_name=Doe&roles[]=admin&roles[]=moderator'))
+        })
+
+        it('will not initialize from the url query params when useHistory is false', () => {
+            window.history.pushState({}, '', '?first_name=Jane')
+            store = new Store('/users', {useHistory: false})
+            store.addQueryParam('first_name', 'John')
+
+            expect(store.getQueryParam('first_name')).toBe('John')
+        })
+
+        it('will not update the url when useHistory is false', () => {
+            const http = getHttpMock()
+            store = new Store('/users', {http, refreshOnParamChange: false, useHistory: false})
+            store.addQueryParam('first_name', '')
+                .addQueryParam('last_name', '')
+                .addQueryParam('roles[]', [])
+                .start()
+            expect(window.location.search).toBe('')
+
+            store.setQueryParam('first_name', 'John')
+                .setQueryParam('last_name', 'Doe')
+                .setQueryParam('roles[]', ['admin', 'moderator'])
+                .refresh()
+
+            expect(window.location.search).toBe('')
+        })
     })
 })
 

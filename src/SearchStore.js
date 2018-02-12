@@ -1,4 +1,4 @@
-import {obj_get} from './utils'
+import {isArray, obj_get} from './utils'
 
 const pickBy = require('lodash.pickby')
 
@@ -16,6 +16,7 @@ export default class SearchStore {
         this._options = Object.assign({
             pagination: {last_page: 'last_page', current_page: 'current_page'},
             refreshOnParamChange: true,
+            useHistory: true,
             params: {},
         }, options)
     }
@@ -26,15 +27,19 @@ export default class SearchStore {
 
     addQueryParam(name, value, options) {
         if (this.state.params[name] !== undefined) {
-            return
+            return this
         }
 
-        this.state.params = Object.assign({}, this.state.params, {[name]: value})
+        this.state.params = Object.assign({}, this.state.params, {
+            [name]: this.getParamValueFromUrl(name, value),
+        })
 
         this._options.params[name] = Object.assign({
             refreshOnChange: this.getOption('refreshOnParamChange'),
             default: value,
         }, options)
+
+        return this
     }
 
     setQueryParam(name, value) {
@@ -48,6 +53,8 @@ export default class SearchStore {
         if (this.getOption(`params.${name}.refreshOnChange`)) {
             this.refresh()
         }
+
+        return this
     }
 
     getQueryParam(name) {
@@ -126,6 +133,7 @@ export default class SearchStore {
         this.isLoading = true
 
         const params = pickBy(this.state.params, f => f)
+        this.updateHistory(params)
 
         return this._http.get(this._url, {params})
             .then(({data}) => {
@@ -165,9 +173,46 @@ export default class SearchStore {
         this._results = value
     }
 
+    getParamValueFromUrl(param, def) {
+        if (!this.getOption('useHistory')) {
+            return def
+        }
+
+        let searchParams = new URLSearchParams(location.search)
+        let value = searchParams.get(param)
+
+        if (isArray(def)) {
+            value = searchParams.getAll(param)
+        }
+
+        return Number(value) || value || def
+    }
+
+    updateHistory(params) {
+        if (!this.getOption('useHistory')) {
+            return
+        }
+
+        let searchParams = new URLSearchParams()
+        for (let name in params) {
+            if (!params.hasOwnProperty(name)) {
+                continue
+            }
+
+            const value = params[name]
+            if (isArray(value)) {
+                value.forEach(v => searchParams.append(name, v))
+            } else {
+                searchParams.append(name, value)
+            }
+        }
+
+        window.history.replaceState({}, '', `${location.pathname}?${searchParams}`)
+    }
+
     guardAgainstUnknownParam(param) {
         if (this.state.params[param] === undefined) {
-            throw new Error(`No such parameter '${param}', call 'registerQueryParam' first`)
+            throw new Error(`No such parameter '${param}', call 'addQueryParam' first`)
         }
     }
 }
