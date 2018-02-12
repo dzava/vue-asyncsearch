@@ -37,8 +37,8 @@ describe('SearchStore', () => {
         store.addQueryParam('role', 'developer', {refreshOnChange: false})
 
         expect(store.getQueryParam('role')).toBe('developer')
-        expect(store._paramOptions.role.refreshOnChange).toBe(false)
-        expect(store._paramOptions.name.refreshOnChange).toBe(true)
+        expect(store.getOption('params.role.refreshOnChange')).toBe(false)
+        expect(store.getOption('params.name.refreshOnChange')).toBe(true)
     })
 
     it('can set a params value', () => {

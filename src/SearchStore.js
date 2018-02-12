@@ -7,8 +7,6 @@ export default class SearchStore {
         this._url = url
         this._results = []
         this._stoppedCounter = 1
-        this._paramDefaults = {}
-        this._paramOptions = {}
         this._pagination = {last_page: 0, current_page: 1}
 
         this.isFirstLoad = true
@@ -18,11 +16,12 @@ export default class SearchStore {
         this._options = Object.assign({
             pagination: {last_page: 'last_page', current_page: 'current_page'},
             refreshOnParamChange: true,
+            params: {},
         }, options)
     }
 
     get _http() {
-        return this._options.http || window.axios
+        return this.getOption('http', window.axios)
     }
 
     addQueryParam(name, value, options) {
@@ -32,8 +31,10 @@ export default class SearchStore {
 
         this.state.params = Object.assign({}, this.state.params, {[name]: value})
 
-        this._paramDefaults[name] = value
-        this._paramOptions[name] = Object.assign({refreshOnChange: this._options.refreshOnParamChange}, options)
+        this._options.params[name] = Object.assign({
+            refreshOnChange: this.getOption('refreshOnParamChange'),
+            default: value,
+        }, options)
     }
 
     setQueryParam(name, value) {
@@ -44,7 +45,7 @@ export default class SearchStore {
         /* Determine if we should refresh the results because
          * of a change in this params value
          */
-        if (obj_get(this._paramOptions, `${name}.refreshOnChange`, this.getOption('refreshOnParamChange'))) {
+        if (this.getOption(`params.${name}.refreshOnChange`)) {
             this.refresh()
         }
     }
@@ -58,7 +59,7 @@ export default class SearchStore {
     resetQueryParam(param) {
         this.guardAgainstUnknownParam(param)
 
-        this.setQueryParam(param, this._paramDefaults[param])
+        this.setQueryParam(param, this.getOption(`params.${param}.default`))
     }
 
     clear() {
@@ -110,12 +111,14 @@ export default class SearchStore {
         })
     }
 
-    getOption(name) {
-        if (this._options[name] === undefined) {
+    getOption(name, def = undefined) {
+        const value = obj_get(this._options, name, def)
+
+        if (value === undefined) {
             throw new Error(`No such option '${name}'`)
         }
 
-        return this._options[name]
+        return value
     }
 
     _submit() {
