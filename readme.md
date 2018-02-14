@@ -142,6 +142,24 @@ A component that renders when there are no results in the response
 #### `as-search-button`:
 A button that refreshes the results
 
+#### `as-param`:
+A wrapper component which gives access to a param.
+##### Props
+* `name`: (required) same as `as-input`
+* `default-value`: same as `as-input`
+* `resetParams`: same as `as-input`
+* `refresh-on-change`: same as `as-input`
+##### Usage
+```html
+<as-param name="count" :default-value="1">
+    <template slot-scope="{value, setValue}">
+        <button @click="setValue(value+1)">+</button>
+            {{ value }}
+        <button @click="setValue(value-1)">-</button>
+    </template>
+</as-param>
+```
+
 ### Configuration
 
 *http*

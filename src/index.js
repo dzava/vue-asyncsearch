@@ -4,6 +4,7 @@ import Input from './components/Input'
 import Loading from './components/Loading'
 import LoadMore from './components/LoadMore'
 import NoResults from './components/NoResults'
+import Param from './components/Param'
 import Pagination from './components/Pagination'
 import RefinementList from './components/RefinementList'
 import Results from './components/Results'
@@ -18,6 +19,7 @@ const AsyncSearch = {
     Loading,
     LoadMore,
     NoResults,
+    Param,
     Pagination,
     RefinementList,
     Results,
@@ -31,6 +33,7 @@ const AsyncSearch = {
         Vue.component('as-loading', Loading)
         Vue.component('as-load-more', LoadMore)
         Vue.component('as-no-results', NoResults)
+        Vue.component('as-param', Param)
         Vue.component('as-pagination', Pagination)
         Vue.component('as-refinement-list', RefinementList)
         Vue.component('as-results', Results)
@@ -48,6 +51,7 @@ export {
     Loading,
     LoadMore,
     NoResults,
+    Param,
     Pagination,
     RefinementList,
     Results,
