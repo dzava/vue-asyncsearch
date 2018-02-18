@@ -251,6 +251,19 @@ describe('SearchStore', () => {
 
             expect(window.location.search).toBe('')
         })
+
+        it('will not update the url with params whose value is the default one', () => {
+            const http = getHttpMock()
+            store = new Store('/users', {http, refreshOnParamChange: false, useHistory: true})
+            store.addQueryParam('first_name', '')
+                .addQueryParam('last_name', 'Doe')
+                .start()
+
+            store.setQueryParam('first_name', 'John')
+                .refresh()
+
+            expect(window.location.search).toEqual('?first_name=John')
+        })
     })
 })
 

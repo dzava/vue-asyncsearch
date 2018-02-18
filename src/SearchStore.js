@@ -73,6 +73,10 @@ export default class SearchStore {
         this.setQueryParam(param, this.getOption(`params.${param}.default`))
     }
 
+    isQueryParamDirty(param) {
+        return !(this.getQueryParam(param) === this.getOption(`params.${param}.default`))
+    }
+
     clear() {
         this.stop()
 
@@ -199,7 +203,7 @@ export default class SearchStore {
 
         let searchParams = new URLSearchParams()
         for (let name in params) {
-            if (!params.hasOwnProperty(name)) {
+            if (!params.hasOwnProperty(name) || !this.isQueryParamDirty(name)) {
                 continue
             }
 
