@@ -266,6 +266,21 @@ describe('SearchStore', () => {
 
             expect(window.location.search).toEqual('?first_name=John')
         })
+
+        it('will not update the url with a param that has set addToUrl to false', () => {
+            const http = getHttpMock()
+            store = new Store('/users', {http, refreshOnParamChange: false, useHistory: true})
+            store.addQueryParam('first_name', '', {addToUrl: false})
+                .addQueryParam('last_name', '')
+                .start()
+            expect(window.location.search).toEqual('')
+
+            store.setQueryParam('first_name', 'John',)
+                .setQueryParam('last_name', 'Doe')
+                .refresh()
+
+            expect(window.location.search).toEqual('?last_name=Doe')
+        })
     })
 })
 

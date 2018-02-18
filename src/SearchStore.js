@@ -37,6 +37,7 @@ export default class SearchStore {
         this._options.params[name] = Object.assign({
             refreshOnChange: this.getOption('refreshOnParamChange'),
             default: value,
+            addToUrl: true,
         }, options)
 
         return this
@@ -203,7 +204,7 @@ export default class SearchStore {
 
         let searchParams = new URLSearchParams()
         for (let name in params) {
-            if (!params.hasOwnProperty(name) || !this.isQueryParamDirty(name)) {
+            if (!params.hasOwnProperty(name) || !this.isQueryParamDirty(name) || !this.getOption(`params.${name}.addToUrl`)) {
                 continue
             }
 

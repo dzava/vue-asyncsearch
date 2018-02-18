@@ -20,6 +20,10 @@ export default {
                 return this.searchStore.getOption('refreshOnParamChange')
             },
         },
+        addToUrl: {
+            type: Boolean,
+            default: true,
+        },
     },
     computed: {
         value: {
@@ -36,6 +40,9 @@ export default {
         },
     },
     created() {
-        this.searchStore.addQueryParam(this.name, this.defaultValue, {refreshOnChange: this.refreshOnChange})
+        this.searchStore.addQueryParam(this.name, this.defaultValue, {
+            refreshOnChange: this.refreshOnChange,
+            addToUrl: this.addToUrl,
+        })
     },
 }

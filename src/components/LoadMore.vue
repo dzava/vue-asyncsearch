@@ -18,6 +18,12 @@
 
     export default {
         mixins: [ParamMixin, PaginationMixin],
+        props: {
+            addToUrl: {
+                type: Boolean,
+                default: false,
+            },
+        },
         methods: {
             loadMore() {
                 if (this.value + 1 > this.total) {

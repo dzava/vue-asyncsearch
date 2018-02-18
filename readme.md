@@ -93,6 +93,7 @@ A simple text input that will update the parameter value as its value changes.
 * `reset-params`: An array of param names to reset when this param's value changes
 * `refresh-on-change`: a boolean indicating whether the results should be refreshed when the value changes. Default's to the value of the `refresh-on-param-change` prop of the `as-search` component.
 * `delay`: the delay (in milliseconds), since the last time the value changed, after which the results will be refreshed
+* 'add-to-url': boolean indicating if the param should be appended to the url when use history is true (default: true)
 
 #### `as-filter-by-selector`:
 A component that allows setting a param from a list of values
@@ -102,6 +103,7 @@ A component that allows setting a param from a list of values
 * `default-value`: The default value of the param, this value is used when resetting the parameters using the `as-clear` component. The value here should match the value key of one of the options
 * `reset-params`: An array of param names to reset when this param's value changes
 * `refresh-on-param-change`: same as `as-input`
+* 'add-to-url': boolean indicating if the param should be appended to the url when use history is true (default: true)
 
 
 #### `as-refinement-list`:
@@ -113,6 +115,7 @@ A component that allows setting a param from a list of values
 being the value of one of the options that should be enabled by default
 * `reset-params`: An array of param names to reset when this param's value changes
 * `refresh-on-param-change`: same as `as-input`
+* 'add-to-url': boolean indicating if the param should be appended to the url when use history is true (default: true)
 
 #### `as-clear`:
 A button used to reset parameters to their default value
@@ -130,6 +133,7 @@ A button that, will increase the param value by one, perform a new request and a
 * `name`: (required) same as `as-input`. default: `page`
 * `default-value`: same as `as-input`. default: `1`
 * `resetParams`: same as `as-input`
+* 'add-to-url': boolean indicating if the param should be appended to the url when use history is true (default: false)
 
 #### `as-pagination`:
 A list of links to navigate paginated results
