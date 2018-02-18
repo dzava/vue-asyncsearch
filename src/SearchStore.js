@@ -189,7 +189,7 @@ export default class SearchStore {
         let searchParams = new URLSearchParams(location.search)
         let value = searchParams.get(param)
 
-        if (isArray(def)) {
+        if (isArray(def) && searchParams.has(param)) {
             value = searchParams.getAll(param)
         }
 

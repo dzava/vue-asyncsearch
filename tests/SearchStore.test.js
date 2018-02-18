@@ -202,11 +202,13 @@ describe('SearchStore', () => {
             store.addQueryParam('first_name', 'John')
                 .addQueryParam('last_name', 'Doe')
                 .addQueryParam('roles[]', [])
+                .addQueryParam('status[]', ['published'])
                 .addQueryParam('page', 1)
 
             expect(store.getQueryParam('first_name')).toBe('Jane')
             expect(store.getQueryParam('last_name')).toBe('Doe')
             expect(store.getQueryParam('roles[]')).toEqual(['admin', 'moderator'])
+            expect(store.getQueryParam('status[]')).toEqual(['published'])
             expect(store.getQueryParam('page')).toBe(2)
         })
 
