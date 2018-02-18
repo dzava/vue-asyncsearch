@@ -45,6 +45,10 @@ export default class SearchStore {
     setQueryParam(name, value) {
         this.guardAgainstUnknownParam(name)
 
+        if (this.state.params[name] === value) {
+            return this
+        }
+
         this.state.params[name] = value
 
         /* Determine if we should refresh the results because

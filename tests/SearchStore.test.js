@@ -137,16 +137,39 @@ describe('SearchStore', () => {
         expect(http.get).toHaveBeenCalledTimes(1)
     })
 
-    it('will refresh when a param value changes', () => {
+    it('will not refresh when resetting a param if the current value is the default', () => {
         const http = getHttpMock()
         store = new Store('/users', {http: http})
         store.addQueryParam('name', 'John')
         store.start()
 
+        store.resetQueryParam('name')
+
+        expect(http.get).toHaveBeenCalledTimes(0)
+    })
+
+    it('will refresh when a param value changes', () => {
+        const http = getHttpMock()
+        store = new Store('/users', {http: http})
+        store.refresh = jest.fn()
+        store.addQueryParam('name', 'John')
+        store.start()
+
+        store.setQueryParam('name', 'John')
         store.setQueryParam('name', 'Jane')
 
-        expect(http.get).toHaveBeenCalledTimes(1)
-        expect(http.get).toHaveBeenCalledWith('/users', {params: {name: 'Jane'}})
+        expect(store.refresh).toHaveBeenCalledTimes(1)
+    })
+
+    it('will not refresh when setting the param value if the new value is the same with the old', () => {
+        const http = getHttpMock()
+        store = new Store('/users', {http: http})
+        store.addQueryParam('name', 'John')
+        store.start()
+
+        store.setQueryParam('name', 'John')
+
+        expect(http.get).toHaveBeenCalledTimes(0)
     })
 
     it('can disable refresh on change for each param individually', () => {
@@ -233,7 +256,7 @@ describe('SearchStore', () => {
 
 const getHttpMock = (data = {data: []}) => {
     const getMock = jest.fn()
-    getMock.mockReturnValue(new Promise((resolve, reject) => {
+    getMock.mockReturnValue(new Promise((resolve) => {
         resolve({data})
     }))
 
