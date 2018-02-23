@@ -7,6 +7,7 @@ import NoResults from './components/NoResults'
 import Param from './components/Param'
 import Pagination from './components/Pagination'
 import Checkbox from './components/Checkbox'
+import Radio from './components/Radio'
 import Results from './components/Results'
 import Search from './components/Search'
 import SearchButton from './components/SearchButton'
@@ -22,6 +23,7 @@ const AsyncSearch = {
     Param,
     Pagination,
     Checkbox,
+    Radio,
     Results,
     Search,
     SearchButton,
@@ -36,6 +38,7 @@ const AsyncSearch = {
         Vue.component('as-param', Param)
         Vue.component('as-pagination', Pagination)
         Vue.component('as-checkbox', Checkbox)
+        Vue.component('as-radio', Radio)
         Vue.component('as-results', Results)
         Vue.component('as-search', Search)
         Vue.component('as-search-button', SearchButton)
@@ -54,6 +57,7 @@ export {
     Param,
     Pagination,
     Checkbox,
+    Radio,
     Results,
     Search,
     SearchButton,

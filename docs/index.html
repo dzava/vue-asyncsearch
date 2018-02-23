@@ -37,6 +37,14 @@
                                 {label: 'Users', value: 'user'},
                 ]"></as-checkbox>
 
+                <as-radio name="status"
+                          class="tc pv2"
+                          :reset-params="['page']"
+                          :options="[
+                                {label: 'All', value: ''},
+                                {label: 'Banned', value: 'banned'},
+                ]"></as-radio>
+
                 <as-select class="pa2 mb2 ba b--black-20 bg-white"
                            name="per_page"
                            :reset-params="['page']"
@@ -70,12 +78,13 @@
 
                     <as-no-results class="mt4 tc"></as-no-results>
 
-                    <as-results class="overflow-y-auto" style="height: 65vh">
+                    <as-results class="overflow-y-auto" style="height: 55vh">
                         <div class="flex items-center" slot-scope="{ result: user }">
                             <img class="br-100 mr3 pa1 ba b--black-10 h3 w3" :src="user.picture"
                                  :alt="`user.first_name user.last_name 's avatar`">
                             {{ user.first_name }} {{ user.last_name }}
                             <span class="ml2 gray">({{ user.role }})</span>
+                            <span class="ml2 dark-red" v-if="user.banned">banned</span>
                         </div>
                     </as-results>
 

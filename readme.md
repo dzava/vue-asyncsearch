@@ -117,6 +117,16 @@ being the value of one of the options that should be enabled by default
 * `refresh-on-param-change`: same as `as-input`
 * 'add-to-url': boolean indicating if the param should be appended to the url when use history is true (default: true)
 
+#### `as-radio`:
+
+##### Props
+* `name`: (required) same as `as-input`
+* `options`: an array of objects in the following format `{label: '', value: ''}`
+* `default-value`: The default value of the param, this value is used when resetting the parameters using the `as-clear` component. The value here should match the value key of one of the options
+* `reset-params`: An array of param names to reset when this param's value changes
+* `refresh-on-param-change`: same as `as-input`
+* 'add-to-url': boolean indicating if the param should be appended to the url when use history is true (default: true)
+
 #### `as-clear`:
 A button used to reset parameters to their default value
 ##### Props

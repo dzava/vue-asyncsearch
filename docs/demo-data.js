@@ -5,6 +5,7 @@ export default [
         'last_name': 'Barrett',
         'email': 'whiteheadbarrett@isostream.com',
         'role': 'moderator',
+        'banned': false,
     },
     {
         'picture': 'http://i.pravatar.cc/100?img=1',
@@ -12,6 +13,7 @@ export default [
         'last_name': 'Lowery',
         'email': 'bridgetlowery@isostream.com',
         'role': 'admin',
+        'banned': false,
     },
     {
         'picture': 'http://i.pravatar.cc/100?img=2',
@@ -19,6 +21,7 @@ export default [
         'last_name': 'Houston',
         'email': 'sashahouston@isostream.com',
         'role': 'admin',
+        'banned': false,
     },
     {
         'picture': 'http://i.pravatar.cc/100?img=3',
@@ -26,6 +29,7 @@ export default [
         'last_name': 'Wiley',
         'email': 'winterswiley@isostream.com',
         'role': 'user',
+        'banned': false,
     },
     {
         'picture': 'http://i.pravatar.cc/100?img=4',
@@ -33,6 +37,7 @@ export default [
         'last_name': 'Holder',
         'email': 'wallaceholder@isostream.com',
         'role': 'admin',
+        'banned': false,
     },
     {
         'picture': 'http://i.pravatar.cc/100?img=5',
@@ -40,6 +45,7 @@ export default [
         'last_name': 'Rowe',
         'email': 'adelerowe@isostream.com',
         'role': 'admin',
+        'banned': false,
     },
     {
         'picture': 'http://i.pravatar.cc/100?img=6',
@@ -47,6 +53,7 @@ export default [
         'last_name': 'Cleveland',
         'email': 'sadiecleveland@isostream.com',
         'role': 'admin',
+        'banned': false,
     },
     {
         'picture': 'http://i.pravatar.cc/100?img=7',
@@ -54,6 +61,7 @@ export default [
         'last_name': 'Donaldson',
         'email': 'cashdonaldson@isostream.com',
         'role': 'moderator',
+        'banned': false,
     },
     {
         'picture': 'http://i.pravatar.cc/100?img=8',
@@ -61,6 +69,7 @@ export default [
         'last_name': 'Terrell',
         'email': 'jaclynterrell@isostream.com',
         'role': 'admin',
+        'banned': true,
     },
     {
         'picture': 'http://i.pravatar.cc/100?img=9',
@@ -68,6 +77,7 @@ export default [
         'last_name': 'Mcdowell',
         'email': 'judithmcdowell@isostream.com',
         'role': 'user',
+        'banned': true,
     },
     {
         'picture': 'http://i.pravatar.cc/100?img=10',
@@ -75,6 +85,7 @@ export default [
         'last_name': 'Duncan',
         'email': 'taylorduncan@isostream.com',
         'role': 'user',
+        'banned': false,
     },
     {
         'picture': 'http://i.pravatar.cc/100?img=11',
@@ -82,6 +93,7 @@ export default [
         'last_name': 'Lindsey',
         'email': 'rutledgelindsey@isostream.com',
         'role': 'moderator',
+        'banned': false,
     },
     {
         'picture': 'http://i.pravatar.cc/100?img=12',
@@ -89,6 +101,7 @@ export default [
         'last_name': 'Burns',
         'email': 'jewelburns@isostream.com',
         'role': 'admin',
+        'banned': false,
     },
     {
         'picture': 'http://i.pravatar.cc/100?img=13',
@@ -96,6 +109,7 @@ export default [
         'last_name': 'Burch',
         'email': 'calhounburch@isostream.com',
         'role': 'moderator',
+        'banned': false,
     },
     {
         'picture': 'http://i.pravatar.cc/100?img=14',
@@ -103,6 +117,7 @@ export default [
         'last_name': 'Jefferson',
         'email': 'paulinejefferson@isostream.com',
         'role': 'user',
+        'banned': false,
     },
     {
         'picture': 'http://i.pravatar.cc/100?img=15',
@@ -110,6 +125,7 @@ export default [
         'last_name': 'Dejesus',
         'email': 'adamsdejesus@isostream.com',
         'role': 'admin',
+        'banned': true,
     },
     {
         'picture': 'http://i.pravatar.cc/100?img=16',
@@ -117,6 +133,7 @@ export default [
         'last_name': 'Shaffer',
         'email': 'lyndashaffer@isostream.com',
         'role': 'moderator',
+        'banned': false,
     },
     {
         'picture': 'http://i.pravatar.cc/100?img=17',
@@ -124,6 +141,7 @@ export default [
         'last_name': 'Cummings',
         'email': 'dillardcummings@isostream.com',
         'role': 'moderator',
+        'banned': false,
     },
     {
         'picture': 'http://i.pravatar.cc/100?img=18',
@@ -131,6 +149,7 @@ export default [
         'last_name': 'Martinez',
         'email': 'antoinettemartinez@isostream.com',
         'role': 'admin',
+        'banned': false,
     },
     {
         'picture': 'http://i.pravatar.cc/100?img=19',
@@ -138,6 +157,7 @@ export default [
         'last_name': 'Madden',
         'email': 'phillipsmadden@isostream.com',
         'role': 'admin',
+        'banned': false,
     },
     {
         'picture': 'http://i.pravatar.cc/100?img=20',
@@ -145,6 +165,7 @@ export default [
         'last_name': 'Patrick',
         'email': 'katherinepatrick@isostream.com',
         'role': 'user',
+        'banned': false,
     },
     {
         'picture': 'http://i.pravatar.cc/100?img=21',
@@ -152,6 +173,7 @@ export default [
         'last_name': 'Ferrell',
         'email': 'cochranferrell@isostream.com',
         'role': 'admin',
+        'banned': true,
     },
     {
         'picture': 'http://i.pravatar.cc/100?img=22',
@@ -159,6 +181,7 @@ export default [
         'last_name': 'Owen',
         'email': 'yatesowen@isostream.com',
         'role': 'user',
+        'banned': false,
     },
     {
         'picture': 'http://i.pravatar.cc/100?img=23',
@@ -166,6 +189,7 @@ export default [
         'last_name': 'Spencer',
         'email': 'arnoldspencer@isostream.com',
         'role': 'user',
+        'banned': false,
     },
     {
         'picture': 'http://i.pravatar.cc/100?img=24',
@@ -173,6 +197,7 @@ export default [
         'last_name': 'Ochoa',
         'email': 'dunnochoa@isostream.com',
         'role': 'admin',
+        'banned': false,
     },
     {
         'picture': 'http://i.pravatar.cc/100?img=25',
@@ -180,6 +205,7 @@ export default [
         'last_name': 'Mclaughlin',
         'email': 'oconnormclaughlin@isostream.com',
         'role': 'moderator',
+        'banned': false,
     },
     {
         'picture': 'http://i.pravatar.cc/100?img=26',
@@ -187,6 +213,7 @@ export default [
         'last_name': 'Valenzuela',
         'email': 'kaitlinvalenzuela@isostream.com',
         'role': 'admin',
+        'banned': false,
     },
     {
         'picture': 'http://i.pravatar.cc/100?img=27',
@@ -194,6 +221,7 @@ export default [
         'last_name': 'Powell',
         'email': 'frederickpowell@isostream.com',
         'role': 'user',
+        'banned': true,
     },
     {
         'picture': 'http://i.pravatar.cc/100?img=28',
@@ -201,6 +229,7 @@ export default [
         'last_name': 'Tillman',
         'email': 'maddentillman@isostream.com',
         'role': 'moderator',
+        'banned': false,
     },
     {
         'picture': 'http://i.pravatar.cc/100?img=29',
@@ -208,6 +237,7 @@ export default [
         'last_name': 'Lloyd',
         'email': 'ratlifflloyd@isostream.com',
         'role': 'user',
+        'banned': false,
     },
     {
         'picture': 'http://i.pravatar.cc/100?img=30',
@@ -215,6 +245,7 @@ export default [
         'last_name': 'King',
         'email': 'oneillking@isostream.com',
         'role': 'admin',
+        'banned': false,
     },
     {
         'picture': 'http://i.pravatar.cc/100?img=31',
@@ -222,6 +253,7 @@ export default [
         'last_name': 'Wilson',
         'email': 'cantuwilson@isostream.com',
         'role': 'admin',
+        'banned': false,
     },
     {
         'picture': 'http://i.pravatar.cc/100?img=32',
@@ -229,6 +261,7 @@ export default [
         'last_name': 'Garner',
         'email': 'delacruzgarner@isostream.com',
         'role': 'user',
+        'banned': false,
     },
     {
         'picture': 'http://i.pravatar.cc/100?img=33',
@@ -236,6 +269,7 @@ export default [
         'last_name': 'Livingston',
         'email': 'sybillivingston@isostream.com',
         'role': 'moderator',
+        'banned': true,
     },
     {
         'picture': 'http://i.pravatar.cc/100?img=34',
@@ -243,6 +277,7 @@ export default [
         'last_name': 'Chan',
         'email': 'keishachan@isostream.com',
         'role': 'admin',
+        'banned': false,
     },
     {
         'picture': 'http://i.pravatar.cc/100?img=35',
@@ -250,6 +285,7 @@ export default [
         'last_name': 'Mcconnell',
         'email': 'talleymcconnell@isostream.com',
         'role': 'admin',
+        'banned': false,
     },
     {
         'picture': 'http://i.pravatar.cc/100?img=36',
@@ -257,6 +293,7 @@ export default [
         'last_name': 'Wynn',
         'email': 'mcclurewynn@isostream.com',
         'role': 'moderator',
+        'banned': false,
     },
     {
         'picture': 'http://i.pravatar.cc/100?img=37',
@@ -264,6 +301,7 @@ export default [
         'last_name': 'Carey',
         'email': 'tamikacarey@isostream.com',
         'role': 'admin',
+        'banned': false,
     },
     {
         'picture': 'http://i.pravatar.cc/100?img=38',
@@ -271,6 +309,7 @@ export default [
         'last_name': 'Macdonald',
         'email': 'duffymacdonald@isostream.com',
         'role': 'moderator',
+        'banned': false,
     },
     {
         'picture': 'http://i.pravatar.cc/100?img=39',
@@ -278,6 +317,7 @@ export default [
         'last_name': 'Greene',
         'email': 'jackiegreene@isostream.com',
         'role': 'user',
+        'banned': false,
     },
     {
         'picture': 'http://i.pravatar.cc/100?img=40',
@@ -285,6 +325,7 @@ export default [
         'last_name': 'Savage',
         'email': 'riverasavage@isostream.com',
         'role': 'user',
+        'banned': false,
     },
     {
         'picture': 'http://i.pravatar.cc/100?img=41',
@@ -292,6 +333,7 @@ export default [
         'last_name': 'Vinson',
         'email': 'eatonvinson@isostream.com',
         'role': 'moderator',
+        'banned': false,
     },
     {
         'picture': 'http://i.pravatar.cc/100?img=42',
@@ -299,6 +341,7 @@ export default [
         'last_name': 'Barlow',
         'email': 'rosabarlow@isostream.com',
         'role': 'user',
+        'banned': false,
     },
     {
         'picture': 'http://i.pravatar.cc/100?img=43',
@@ -306,6 +349,7 @@ export default [
         'last_name': 'Johnston',
         'email': 'kerrijohnston@isostream.com',
         'role': 'user',
+        'banned': false,
     },
     {
         'picture': 'http://i.pravatar.cc/100?img=44',
@@ -313,6 +357,7 @@ export default [
         'last_name': 'Blanchard',
         'email': 'jayneblanchard@isostream.com',
         'role': 'admin',
+        'banned': true,
     },
     {
         'picture': 'http://i.pravatar.cc/100?img=45',
@@ -320,6 +365,7 @@ export default [
         'last_name': 'Swanson',
         'email': 'pamswanson@isostream.com',
         'role': 'admin',
+        'banned': false,
     },
     {
         'picture': 'http://i.pravatar.cc/100?img=46',
@@ -327,6 +373,7 @@ export default [
         'last_name': 'Mathis',
         'email': 'turnermathis@isostream.com',
         'role': 'admin',
+        'banned': false,
     },
     {
         'picture': 'http://i.pravatar.cc/100?img=47',
@@ -334,6 +381,7 @@ export default [
         'last_name': 'Glover',
         'email': 'pughglover@isostream.com',
         'role': 'user',
+        'banned': false,
     },
     {
         'picture': 'http://i.pravatar.cc/100?img=48',
@@ -341,6 +389,7 @@ export default [
         'last_name': 'Kane',
         'email': 'floydkane@isostream.com',
         'role': 'user',
+        'banned': false,
     },
     {
         'picture': 'http://i.pravatar.cc/100?img=49',
@@ -348,5 +397,6 @@ export default [
         'last_name': 'Vazquez',
         'email': 'junevazquez@isostream.com',
         'role': 'user',
+        'banned': true,
     },
 ]

@@ -1,7 +1,7 @@
 import demoData from './demo-data'
 
 export default class Http {
-    get(url, { params }) {
+    get(url, {params}) {
         return new Promise((resolve, reject) => {
             let results = this.applyFilters(params)
 
@@ -11,7 +11,7 @@ export default class Http {
             results = results.slice(start, start + params.per_page)
 
             setTimeout(() => {
-                console.log('resolved');
+                console.log('resolved')
                 resolve({
                     data: {
                         data: results,
@@ -31,18 +31,22 @@ export default class Http {
 
         if (filters.first_name) {
             results = results.filter(
-                ({ first_name }) => first_name.toLowerCase().indexOf(filters.first_name.toLowerCase()) > -1,
+                ({first_name}) => first_name.toLowerCase().indexOf(filters.first_name.toLowerCase()) > -1,
             )
         }
 
         if (filters.last_name) {
             results = results.filter(
-                ({ last_name }) => last_name.toLowerCase().indexOf(filters.last_name.toLowerCase()) > -1,
+                ({last_name}) => last_name.toLowerCase().indexOf(filters.last_name.toLowerCase()) > -1,
             )
         }
 
+        if (filters.status) {
+            results = results.filter(({banned}) => banned)
+        }
+
         if (filters.role.length) {
-            results = results.filter(({ role }) => filters.role.indexOf(role) > -1)
+            results = results.filter(({role}) => filters.role.indexOf(role) > -1)
         }
 
         return results
