@@ -27,28 +27,27 @@
                               :reset-params="['page']"></as-input>
                 </div>
 
-                <as-refinement-list name="role"
-                                    class="tc pv2"
-                                    :reset-params="['page']"
-                                    :default-value="[]"
-                                    :options="[
-                                        {label: 'Administrators', value: 'admin'},
-                                        {label: 'Moderators', value: 'moderator'},
-                                        {label: 'Users', value: 'user'},
-                                    ]">
-                </as-refinement-list>
+                <as-checkbox name="role"
+                             class="tc pv2"
+                             :reset-params="['page']"
+                             :default-value="[]"
+                             :options="[
+                                {label: 'Administrators', value: 'admin'},
+                                {label: 'Moderators', value: 'moderator'},
+                                {label: 'Users', value: 'user'},
+                ]"></as-checkbox>
 
-                <as-filter-by-selector class="pa2 mb2 ba b--black-20 bg-white"
-                                       name="per_page"
-                                       :reset-params="['page']"
-                                       :refresh-on-change="true"
-                                       :default-value="5"
-                                       :options="[
-                                            {label: '3 users per page', value: 3},
-                                            {label: '5 users per page', value: 5},
-                                            {label: '10 users per page', value: 10},
-                                            {label: '12 users per page', value: 12},
-                ]"></as-filter-by-selector>
+                <as-select class="pa2 mb2 ba b--black-20 bg-white"
+                           name="per_page"
+                           :reset-params="['page']"
+                           :refresh-on-change="true"
+                           :default-value="5"
+                           :options="[
+                                {label: '3 users per page', value: 3},
+                                {label: '5 users per page', value: 5},
+                                {label: '10 users per page', value: 10},
+                                {label: '12 users per page', value: 12},
+                ]"></as-select>
 
                 <as-clear class="input-reset relative pa2 bg-white br1 ba b--black-20 pointer">
                     Reset params

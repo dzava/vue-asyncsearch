@@ -46,14 +46,14 @@ Vue.use(AsyncSearch);
      		   placeholder="Search for users by their username"
                :reset-params="['page']"></as-input>
 
-     <as-filter-by-selector name="per_page"
-                            :default-value="5"
-                            :options="[
-                               {label: '3 users per page', value: 3},
-                               {label: '5 users per page', value: 5},
-                               {label: '10 users per page', value: 10},
-                               {label: '12 users per page', value: 12},
-                            ]"></as-filter-by-selector>
+     <as-select name="per_page"
+                :default-value="5"
+                :options="[
+                   {label: '3 users per page', value: 3},
+                   {label: '5 users per page', value: 5},
+                   {label: '10 users per page', value: 10},
+                   {label: '12 users per page', value: 12},
+                ]"></as-select>
 
     <as-results>
         <div slot-scope="{ result: user }"> {{ user.username }} </div>
@@ -95,7 +95,7 @@ A simple text input that will update the parameter value as its value changes.
 * `delay`: the delay (in milliseconds), since the last time the value changed, after which the results will be refreshed
 * 'add-to-url': boolean indicating if the param should be appended to the url when use history is true (default: true)
 
-#### `as-filter-by-selector`:
+#### `as-select`:
 A component that allows setting a param from a list of values
 ##### Props
 * `name`: (required) same as `as-input`
@@ -106,7 +106,7 @@ A component that allows setting a param from a list of values
 * 'add-to-url': boolean indicating if the param should be appended to the url when use history is true (default: true)
 
 
-#### `as-refinement-list`:
+#### `as-checkbox`:
 
 ##### Props
 * `name`: (required) same as `as-input`, but the query parameter will be an array

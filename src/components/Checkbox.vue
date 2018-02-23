@@ -3,9 +3,9 @@
 
 <template>
     <div>
-        <div class="as-refinement-list-item" v-for="option in options">
-            <label class="as-refinement-list-label">
-                <input type="checkbox" v-model="value" :value="option.value" class="as-refinement-list-checkbox">
+        <div class="as-checkbox-item" v-for="option in options">
+            <label class="as-checkbox-label">
+                <input type="checkbox" v-model="value" :value="option.value" class="as-checkbox-checkbox">
 
                 {{ option.label }}
             </label>
