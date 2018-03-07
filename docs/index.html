@@ -5,18 +5,22 @@
 </head>
 
 <link rel="stylesheet" href="https://unpkg.com/tachyons@4.9.1/css/tachyons.min.css"/>
-<body>
+<style>
+    .as-checkbox-item,
+    .as-radio-item {
+        text-align: left;
+        display: block;
+        margin-left: .5rem;
+    }
+</style>
+<body class="bg-light-gray">
 
-    <div id="app" class="ph4 min-vh-100 bg-light-gray" v-cloak>
-        <div class="mw7 center bg-white ph3 pv1 br1">
-            <as-search url="https://example.com/users" :http="http"
-                       :pagination="{last_page: 'pagination.last_page', current_page: 'pagination.current_page'}">
+    <div id="app" v-cloak>
+        <as-search url="https://example.com/users" :http="http"
+                   :pagination="{last_page: 'pagination.last_page', current_page: 'pagination.current_page'}">
+            <div class="mw8 center ph3 br1">
 
-                <as-debug inline-template>
-                    <p>{{ url }}</p>
-                </as-debug>
-
-                <div class="flex">
+                <div class="flex-ns pa3 relative shadow-4-ns bg-white">
                     <as-input name="first_name" placeholder="First name"
                               class="input-reset border-box pa2 mb2 mr3 w-100 mw-100 ba b--black-20"
                               :reset-params="['page']"></as-input>
@@ -25,76 +29,99 @@
                               class="input-reset border-box pa2 mb2 w-100 mw-100 ba b--black-20"
                               :refresh-on-change="false"
                               :reset-params="['page']"></as-input>
+
+                    <as-search-button
+                        class="input-reset relative mb2 pa2 bg-white br1 ba b--black-20 pointer"></as-search-button>
                 </div>
 
-                <as-checkbox name="role"
-                             class="tc pv2"
-                             :reset-params="['page']"
-                             :default-value="[]"
-                             :options="[
-                                {label: 'Administrators', value: 'admin'},
-                                {label: 'Moderators', value: 'moderator'},
-                                {label: 'Users', value: 'user'},
-                ]"></as-checkbox>
+                <as-debug inline-template>
+                    <div class="db mt3 tc">{{ url }}</div>
+                </as-debug>
 
-                <as-radio name="status"
-                          class="tc pv2"
-                          :reset-params="['page']"
-                          :options="[
-                                {label: 'All', value: ''},
-                                {label: 'Banned', value: 'banned'},
-                ]"></as-radio>
+                <div class="flex-ns pt3-ns bg-light-gray">
+                    <div class="dn db-ns mr3 pl3 w-30-ns">
+                        <h3 class="normal">
+                            Filters
 
-                <as-select class="pa2 mb2 ba b--black-20 bg-white"
-                           name="per_page"
-                           :reset-params="['page']"
-                           :refresh-on-change="true"
-                           :default-value="5"
-                           :options="[
-                                {label: '3 users per page', value: 3},
-                                {label: '5 users per page', value: 5},
-                                {label: '10 users per page', value: 10},
-                                {label: '12 users per page', value: 12},
-                ]"></as-select>
+                            <as-clear class="input-reset bg-transparent bn fr pointer"
+                                      :params="['per_page', 'role', 'status', 'page']">
+                                &cross;
+                            </as-clear>
+                        </h3>
 
-                <as-clear class="input-reset relative pa2 bg-white br1 ba b--black-20 pointer">
-                    Reset params
-                </as-clear>
+                        <div class="mt3">
+                            <div class="pb2">
+                                Per page
 
-                <as-clear class="input-reset relative pa2 bg-white br1 ba b--black-20 pointer"
-                          :params="['first_name']">
-                    Reset first_name only
-                </as-clear>
-
-                <as-search-button
-                    class="input-reset relative pa2 bg-white br1 ba b--black-20 pointer"></as-search-button>
-
-                <as-load-more class="input-reset relative pa2 bg-white br1 ba b--black-20 pointer"></as-load-more>
-
-                <div class="relative ba b--light-gray pa2">
-                    <as-loading class="absolute absolute--fill bg-white-80">
-                        <div class="loading-indicator"></div>
-                    </as-loading>
-
-                    <as-no-results class="mt4 tc"></as-no-results>
-
-                    <as-results class="overflow-y-auto" style="height: 55vh">
-                        <div class="flex items-center" slot-scope="{ result: user }">
-                            <img class="br-100 mr3 pa1 ba b--black-10 h3 w3" :src="user.picture"
-                                 :alt="`user.first_name user.last_name 's avatar`">
-                            {{ user.first_name }} {{ user.last_name }}
-                            <span class="ml2 gray">({{ user.role }})</span>
-                            <span class="ml2 dark-red" v-if="user.banned">banned</span>
+                                <as-clear class="input-reset bg-transparent bn fr pointer" :params="['per_page']">
+                                    &cross;
+                                </as-clear>
+                            </div>
+                            <as-select class="w-100 pa2 mb2 ba b--black-20 bg-transparent hover-bg-white bn"
+                                       name="per_page"
+                                       :reset-params="['page']"
+                                       :refresh-on-change="true"
+                                       :default-value="5"
+                                       :options="perPageOptions"></as-select>
                         </div>
-                    </as-results>
+                        <div class="mt3">
+                            <div class="pb2">
+                                Role
 
+                                <as-clear class="input-reset bg-transparent bn fr pointer" :params="['role']">
+                                    &cross;
+                                </as-clear>
+                            </div>
+                            <as-checkbox name="role"
+                                         class="tc pv2"
+                                         :reset-params="['page']"
+                                         :default-value="[]"
+                                         :options="roleOptions"></as-checkbox>
+                        </div>
+                        <div class="mt3">
+                            <div class="pb2">
+                                Status
+
+                                <as-clear class="input-reset bg-transparent bn fr pointer" :params="['status']">
+                                    &cross;
+                                </as-clear>
+                            </div>
+                            <as-radio name="status"
+                                      class="tc pv2"
+                                      :reset-params="['page']"
+                                      :options="statusOptions"></as-radio>
+                        </div>
+                    </div>
+
+                    <div class="relative w-100 bg-white shadow-4-ns">
+                        <as-loading class="absolute absolute--fill bg-white-80">
+                            <div class="loading-indicator"></div>
+                        </as-loading>
+                        <div class="pa2 overflow-y-auto"
+                             style="height: calc(100vh - 180px); min-height: calc(100vh - 180px)">
+                            <as-no-results class="mt4 tc"></as-no-results>
+
+                            <as-results class="">
+                                <div class="flex items-center" slot-scope="{ result: user }">
+                                    <img class="br-100 mr3 pa1 ba b--black-10 h3 w3" :src="user.picture"
+                                         :alt="`${user.first_name} ${user.last_name}'s avatar`">
+                                    {{ user.first_name }} {{ user.last_name }}
+                                    <span class="ml2 gray">({{ user.role }})</span>
+                                    <span class="ml2 dark-red" v-if="user.banned">banned</span>
+                                </div>
+                            </as-results>
+
+                            <div class="tc mt2">
+                                <as-load-more
+                                    class="input-reset relative pa2 bg-white br1 ba b--black-20 pointer"></as-load-more>
+                            </div>
+                        </div>
+
+                        <as-pagination class="justify-center mt3"></as-pagination>
+                    </div>
                 </div>
-
-                <as-pagination class="justify-center mt3"></as-pagination>
-
-            </as-search>
-
-        </div>
+            </div>
+        </as-search>
     </div>
 
     <script src="./build/app.js"></script>

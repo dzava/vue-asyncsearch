@@ -32,6 +32,21 @@ new Vue({
     el: '#app',
     data: {
         http: new Http(),
+        perPageOptions: [
+            {label: '3 users', value: 3},
+            {label: '5 users', value: 5},
+            {label: '10 users', value: 10},
+            {label: '12 users', value: 12},
+        ],
+        roleOptions: [
+            {label: 'Administrators', value: 'admin'},
+            {label: 'Moderators', value: 'moderator'},
+            {label: 'Users', value: 'user'},
+        ],
+        statusOptions: [
+            {label: 'All', value: ''},
+            {label: 'Banned', value: 'banned'},
+        ],
     },
     components: {AsyncSearch},
 })
