@@ -113,6 +113,32 @@ describe('SearchStore', () => {
         expect(store.results).toEqual([{name: 'Jane Doe'}, {name: 'John Doe'}, {name: 'John Roe'}])
     })
 
+    it('can use a different path to retrieve the results', async () => {
+        const http = getHttpMock({
+            data: {users: [{name: 'John Doe'}, {name: 'John Roe'}]},
+            last_page: 5,
+            current_page: 3,
+        })
+        store = new Store('/users', {http, resultsPath: 'data.users'})
+        expect(store.results).toEqual([])
+
+        store.start()
+        await store.refresh()
+
+        expect(store.results).toEqual([{name: 'John Doe'}, {name: 'John Roe'}])
+    })
+
+    it('will use the entire response as results if the results path is empty', async () => {
+        const http = getHttpMock([{name: 'John Doe'}, {name: 'John Roe'}])
+        store = new Store('/users', {http, resultsPath: ''})
+        expect(store.results).toEqual([])
+
+        store.start()
+        await store.refresh()
+
+        expect(store.results).toEqual([{name: 'John Doe'}, {name: 'John Roe'}])
+    })
+
     it('will pass the parameters to the http client on refresh', async () => {
         const http = getHttpMock()
         store = new Store('/users', {http})

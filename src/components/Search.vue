@@ -52,6 +52,10 @@
                 type: Boolean,
                 default: true,
             },
+            resultsPath: {
+                type: String,
+                default: 'data',
+            },
         },
         data() {
             return {
@@ -65,6 +69,7 @@
                     pagination: this.pagination,
                     refreshOnParamChange: this.refreshOnParamChange,
                     useHistory: this.useHistory,
+                    resultsPath: this.resultsPath,
                 }
             },
         },

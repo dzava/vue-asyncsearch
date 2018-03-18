@@ -18,6 +18,7 @@ export default class SearchStore {
             refreshOnParamChange: true,
             useHistory: true,
             params: {},
+            resultsPath: 'data',
         }, options)
     }
 
@@ -111,7 +112,7 @@ export default class SearchStore {
         }
 
         return this._submit().then(data => {
-            this._results = data.data
+            this._results = this._getResultsFromResponse(data)
             this.pagination = data
 
             return data
@@ -120,7 +121,7 @@ export default class SearchStore {
 
     loadMore() {
         return this._submit().then(data => {
-            this._results = this._results.concat(data.data)
+            this._results = this._results.concat(this._getResultsFromResponse(data))
             this.pagination = data
 
             return data
@@ -158,6 +159,14 @@ export default class SearchStore {
 
                 return error
             })
+    }
+
+    _getResultsFromResponse(response) {
+        if (!this._options.resultsPath) {
+            return response
+        }
+
+        return obj_get(response, this._options.resultsPath, [])
     }
 
     set pagination(data) {
