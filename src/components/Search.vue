@@ -56,6 +56,10 @@
                 type: String,
                 default: 'data',
             },
+            searchOnLoad: {
+                type: Boolean,
+                default: true,
+            },
         },
         data() {
             return {
@@ -75,7 +79,9 @@
         },
         mounted() {
             this.localSearchStore.start()
-            this.localSearchStore.refresh()
+            if (this.searchOnLoad) {
+                this.localSearchStore.refresh()
+            }
         },
     }
 </script>
