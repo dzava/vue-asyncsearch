@@ -7,7 +7,7 @@
             :class="{ 'as-load-more-is-loading': isLoading }"
             @click="loadMore()">
         <slot>
-            Load more
+            {{ label }}
         </slot>
     </button>
 </template>
@@ -22,6 +22,10 @@
             addToUrl: {
                 type: Boolean,
                 default: false,
+            },
+            label: {
+                type: String,
+                default: 'Load more',
             },
         },
         methods: {

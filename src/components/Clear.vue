@@ -4,7 +4,7 @@
 <template>
     <button type="reset" @click.prevent="clear">
         <slot>
-            Clear
+            {{ label }}
         </slot>
     </button>
 </template>
@@ -19,9 +19,10 @@
                     return []
                 },
             },
-        },
-        data: function () {
-            return {}
+            label: {
+                type: String,
+                default: 'Clear',
+            },
         },
         methods: {
             clear() {

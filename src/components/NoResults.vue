@@ -4,7 +4,7 @@
 <template>
     <div v-if="show">
         <slot>
-            No results matched your query.
+            {{ message }}
         </slot>
     </div>
 </template>
@@ -12,8 +12,11 @@
 <script>
     export default {
         inject: ['searchStore'],
-        data: function () {
-            return {}
+        props: {
+            message: {
+                type: String,
+                default: 'No results matched your query.'
+            },
         },
         computed: {
             show() {

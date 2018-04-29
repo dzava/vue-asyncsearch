@@ -4,8 +4,7 @@
 <template>
     <div v-if="hasResults">
         <slot v-for="(result, index) in results" :result="result" :index="index">
-            Result:
-            <pre>{{ result }}</pre>
+            {{ result }}
         </slot>
     </div>
 </template>
