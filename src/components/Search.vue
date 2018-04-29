@@ -1,12 +1,5 @@
 <style>
-
 </style>
-
-<template>
-    <div>
-        <slot></slot>
-    </div>
-</template>
 
 <script>
     import SearchStore from '../SearchStore'
@@ -83,5 +76,8 @@
                 this.localSearchStore.refresh()
             }
         },
+        render() {
+            return this.$slots.default[0]
+        }
     }
 </script>

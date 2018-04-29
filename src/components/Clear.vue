@@ -4,7 +4,7 @@
 <template>
     <button type="reset" @click.prevent="clear">
         <slot>
-            <span>Clear</span>
+            Clear
         </slot>
     </button>
 </template>

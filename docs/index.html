@@ -82,9 +82,12 @@
                             <div class="pb2">
                                 Status
 
-                                <as-clear class="input-reset bg-transparent bn fr pointer" :params="['status']">
-                                    &cross;
-                                </as-clear>
+                                <as-param name="status">
+                                    <button class="input-reset di bg-transparent bn fr pointer"
+                                            slot-scope="{value, setValue}" @click="setValue('')">
+                                        &cross;
+                                    </button>
+                                </as-param>
                             </div>
                             <as-radio name="status"
                                       class="tc pv2"
