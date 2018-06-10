@@ -3,7 +3,7 @@
 </style>
 
 <template>
-    <input type="text" v-model="value"/>
+    <input type="text" v-model="value" @keydown.enter.prevent="onEnter"/>
 </template>
 
 <script>
@@ -39,6 +39,13 @@
                 return debounce(function () {
                     this.searchStore.refresh()
                 }, this.delay)
+            },
+        },
+        methods: {
+            onEnter() {
+                if (!this.refreshOnChange) {
+                    this.searchStore.refresh()
+                }
             },
         },
     }
