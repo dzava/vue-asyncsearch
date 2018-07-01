@@ -1,2 +1,4 @@
 .idea
-__tests__
+tests
+notes
+yarn.lock
