@@ -3,22 +3,17 @@
 
 <template>
     <select v-model="value">
-        <option :value="option.value" v-for="option in options">
-            {{ option.label }}
+        <option :value="getValueForOption(option)" v-for="option in options">
+            {{ getLabelForOption(option) }}
         </option>
     </select>
 </template>
 
 <script>
     import ParamMixin from '../mixins/ParamMixin'
+    import OptionsMixin from '../mixins/OptionsMixin'
 
     export default {
-        mixins: [ParamMixin],
-        props: {
-            options: {
-                type: Array,
-                required: true,
-            },
-        },
+        mixins: [ParamMixin, OptionsMixin],
     }
 </script>

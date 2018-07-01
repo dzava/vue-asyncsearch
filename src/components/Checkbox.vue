@@ -5,9 +5,9 @@
     <div>
         <div class="as-checkbox-item" v-for="option in options">
             <label class="as-checkbox-label">
-                <input type="checkbox" v-model="value" :value="option.value" class="as-checkbox-checkbox">
+                <input type="checkbox" v-model="value" :value="getValueForOption(option)" class="as-checkbox-checkbox">
 
-                {{ option.label }}
+                {{ getLabelForOption(option) }}
             </label>
         </div>
     </div>
@@ -15,14 +15,11 @@
 
 <script>
     import ParamMixin from '../mixins/ParamMixin'
+    import OptionsMixin from '../mixins/OptionsMixin'
 
     export default {
-        mixins: [ParamMixin],
+        mixins: [ParamMixin, OptionsMixin],
         props: {
-            options: {
-                type: Array,
-                required: true,
-            },
             defaultValue: {
                 type: Array,
                 default() {

@@ -5,9 +5,10 @@
     <div>
         <div class="as-radio-item" v-for="option in options">
             <label class="as-radio-label">
-                <input type="radio" v-model="value" :value="option.value" :name="name" class="as-radio-radio">
+                <input type="radio" v-model="value" :value="getValueForOption(option)" :name="name"
+                       class="as-radio-radio">
 
-                {{ option.label }}
+                {{ getLabelForOption(option) }}
             </label>
         </div>
     </div>
@@ -15,14 +16,11 @@
 
 <script>
     import ParamMixin from '../mixins/ParamMixin'
+    import OptionsMixin from '../mixins/OptionsMixin'
 
     export default {
-        mixins: [ParamMixin],
+        mixins: [ParamMixin, OptionsMixin],
         props: {
-            options: {
-                type: Array,
-                required: true,
-            },
             defaultValue: {
                 default() {
                     return ''

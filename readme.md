@@ -107,6 +107,8 @@ A component that allows setting a param from a list of values
 * `reset-params`: An array of param names to reset when this param's value changes
 * `refresh-on-param-change`: same as `as-input`
 * 'add-to-url': boolean indicating if the param should be appended to the url when use history is true (default: true)
+* `label-field`: The field to be used as the label (Supports dot notation)
+* `value-field`: The field to be used as the value (Supports dot notation)
 
 
 #### `as-checkbox`:
@@ -119,6 +121,8 @@ being the value of one of the options that should be enabled by default
 * `reset-params`: An array of param names to reset when this param's value changes
 * `refresh-on-param-change`: same as `as-input`
 * 'add-to-url': boolean indicating if the param should be appended to the url when use history is true (default: true)
+* `label-field`: The field to be used as the label (Supports dot notation)
+* `value-field`: The field to be used as the value (Supports dot notation)
 
 #### `as-radio`:
 
@@ -129,6 +133,8 @@ being the value of one of the options that should be enabled by default
 * `reset-params`: An array of param names to reset when this param's value changes
 * `refresh-on-param-change`: same as `as-input`
 * 'add-to-url': boolean indicating if the param should be appended to the url when use history is true (default: true)
+* `label-field`: The field to be used as the label (Supports dot notation)
+* `value-field`: The field to be used as the value (Supports dot notation)
 
 #### `as-clear`:
 A button used to reset parameters to their default value
@@ -187,8 +193,8 @@ The library must provide a `get` method which will receive the `url`, and an obj
 ```js
 {
     params: {
-    	param1; value,
-        param2; value,
+    	param1: value,
+        param2: value,
     }
 }
 ```
