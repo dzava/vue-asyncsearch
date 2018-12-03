@@ -3,6 +3,7 @@
 ## 1.2.0
 - Support for object responses
 - The `Search` component no longer requires an explicit wrapper node for its children
+- Configurable prefix
 
 ## 1.1.0
 - The fields used for the label and value of Checkbox/Radio/Select components

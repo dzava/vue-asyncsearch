@@ -14,34 +14,20 @@ import SearchButton from './components/SearchButton'
 import SearchStore from './SearchStore'
 
 const AsyncSearch = {
-    Clear,
-    Select,
-    Input,
-    Loading,
-    LoadMore,
-    NoResults,
-    Param,
-    Pagination,
-    Checkbox,
-    Radio,
-    Results,
-    Search,
-    SearchButton,
-
-    install(Vue) {
-        Vue.component('as-clear', Clear)
-        Vue.component('as-select', Select)
-        Vue.component('as-input', Input)
-        Vue.component('as-loading', Loading)
-        Vue.component('as-load-more', LoadMore)
-        Vue.component('as-no-results', NoResults)
-        Vue.component('as-param', Param)
-        Vue.component('as-pagination', Pagination)
-        Vue.component('as-checkbox', Checkbox)
-        Vue.component('as-radio', Radio)
-        Vue.component('as-results', Results)
-        Vue.component('as-search', Search)
-        Vue.component('as-search-button', SearchButton)
+    install(Vue, prefix = 'as') {
+        Vue.component(`${prefix}-clear`, Clear)
+        Vue.component(`${prefix}-select`, Select)
+        Vue.component(`${prefix}-input`, Input)
+        Vue.component(`${prefix}-loading`, Loading)
+        Vue.component(`${prefix}-load-more`, LoadMore)
+        Vue.component(`${prefix}-no-results`, NoResults)
+        Vue.component(`${prefix}-param`, Param)
+        Vue.component(`${prefix}-pagination`, Pagination)
+        Vue.component(`${prefix}-checkbox`, Checkbox)
+        Vue.component(`${prefix}-radio`, Radio)
+        Vue.component(`${prefix}-results`, Results)
+        Vue.component(`${prefix}-search`, Search)
+        Vue.component(`${prefix}-search-button`, SearchButton)
     },
 }
 
