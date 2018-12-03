@@ -1,4 +1,4 @@
-import {isArray, obj_get} from './utils'
+import {isArray, isObject, obj_get} from './utils'
 
 const pickBy = require('lodash.pickby')
 
@@ -162,11 +162,15 @@ export default class SearchStore {
     }
 
     _getResultsFromResponse(response) {
-        if (!this._options.resultsPath) {
-            return response
+        if (this._options.resultsPath) {
+            response = obj_get(response, this._options.resultsPath, [])
         }
 
-        return obj_get(response, this._options.resultsPath, [])
+        if (isObject(response)) {
+            response = Object.entries(response)
+        }
+
+        return response
     }
 
     set pagination(data) {

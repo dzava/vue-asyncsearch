@@ -139,6 +139,20 @@ describe('SearchStore', () => {
         expect(store.results).toEqual([{name: 'John Doe'}, {name: 'John Roe'}])
     })
 
+    it('supports object responses', async () => {
+        const http = getHttpMock({users: [{name: 'John Doe'}, {name: 'John Roe'}], posts: [{title: 'Who is John Doe'}]})
+        store = new Store('/users', {http, resultsPath: ''})
+        expect(store.results).toEqual([])
+
+        store.start()
+        await store.refresh()
+
+        expect(store.results).toEqual([
+            ['users', [{name: 'John Doe'}, {name: 'John Roe'}]],
+            ['posts', [{title: 'Who is John Doe'}]],
+        ])
+    })
+
     it('will pass the parameters to the http client on refresh', async () => {
         const http = getHttpMock()
         store = new Store('/users', {http})
@@ -301,7 +315,7 @@ describe('SearchStore', () => {
                 .start()
             expect(window.location.search).toEqual('')
 
-            store.setQueryParam('first_name', 'John',)
+            store.setQueryParam('first_name', 'John')
                 .setQueryParam('last_name', 'Doe')
                 .refresh()
 
