@@ -76,8 +76,12 @@
                 this.localSearchStore.refresh()
             }
         },
-        render() {
+        render(h) {
+            if (this.$slots.default.length > 1) {
+                return h('div', this.$slots.default)
+            }
+
             return this.$slots.default[0]
-        }
+        },
     }
 </script>
