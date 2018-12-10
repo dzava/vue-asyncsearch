@@ -44,9 +44,6 @@
             reachedLimit() {
                 return this.limit > 0 && this.timesLoaded >= this.limit
             },
-            reachedTheEnd() {
-                return this.value + 1 > this.total
-            },
         },
         methods: {
             loadMore() {

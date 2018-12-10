@@ -22,5 +22,8 @@ export default {
         isLoading() {
             return this.searchStore.isLoading
         },
+        reachedTheEnd() {
+            return this.value + 1 > this.total
+        },
     },
 }

@@ -30,7 +30,7 @@
         },
         methods: {
             loadMore() {
-                if (this.value + 1 > this.total) {
+                if (this.reachedTheEnd) {
                     return
                 }
                 this.searchStore.stop()
