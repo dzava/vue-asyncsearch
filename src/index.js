@@ -1,6 +1,7 @@
 import Clear from './components/Clear'
 import Select from './components/Select'
 import Input from './components/Input'
+import InfiniteScroll from './components/InfiniteScroll'
 import Loading from './components/Loading'
 import LoadMore from './components/LoadMore'
 import NoResults from './components/NoResults'
@@ -18,6 +19,7 @@ const AsyncSearch = {
         Vue.component(`${prefix}-clear`, Clear)
         Vue.component(`${prefix}-select`, Select)
         Vue.component(`${prefix}-input`, Input)
+        Vue.component(`${prefix}-infinite-scroll`, InfiniteScroll)
         Vue.component(`${prefix}-loading`, Loading)
         Vue.component(`${prefix}-load-more`, LoadMore)
         Vue.component(`${prefix}-no-results`, NoResults)

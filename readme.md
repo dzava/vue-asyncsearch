@@ -98,6 +98,21 @@ A simple text input that will update the parameter value as its value changes.
 * `delay`: the delay (in milliseconds), since the last time the value changed, after which the results will be refreshed
 * `add-to-url`: boolean indicating if the param should be appended to the url when use history is true (default: true)
 
+#### `as-infinite-scroll`:
+A component that will automatically load more results when it becomes visible.
+##### Props
+* `name`: (required) same as `as-input`. default: `page`
+* `default-value`: same as `as-input`. default: `1`
+* `resetParams`: same as `as-input`
+* `add-to-url`: boolean indicating if the param should be appended to the url when use history is true (default: false)
+* `limit`: The maximum number of times to trigger. A value of `0` disables the limit. (default: 0)
+* `options`: The options object to pass to the [Intersection Observer](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API#Intersection_observer_options). (default: {})
+* `delay`: The initial delay before the first load. Can be used to prevent the component from instantly triggering before the initial load is completed.  (default: 1000)
+##### Slots
+* `default`: The default slot context contains two props.
+	* `reachedTheEnd`: becomes true when no more pages are available
+	* `reachedLimit`: becomes true when the component has triggered as many times as the `limit` prop. When the limit is disabled the prop will always be false
+
 #### `as-select`:
 A component that allows setting a param from a list of values
 ##### Props

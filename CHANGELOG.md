@@ -4,6 +4,7 @@
 - Support for object responses
 - The `Search` component no longer requires an explicit wrapper node for its children
 - Configurable prefix
+- Added InfiniteScroll component
 
 ## 1.1.0
 - The fields used for the label and value of Checkbox/Radio/Select components
