@@ -187,14 +187,15 @@ A wrapper component which gives access to a param.
 * `default-value`: same as `as-input`
 * `resetParams`: same as `as-input`
 * `refresh-on-change`: same as `as-input`
+* `delay`: the delay (in milliseconds), since the last time the value changed, after which the param value will update (default: 0)
 ##### Usage
 ```html
 <as-param name="count" :default-value="1">
-    <template slot-scope="{value, setValue}">
+    <div slot-scope="{value, setValue}">
         <button @click="setValue(value+1)">+</button>
             {{ value }}
         <button @click="setValue(value-1)">-</button>
-    </template>
+    </div>
 </as-param>
 ```
 
