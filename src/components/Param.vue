@@ -18,6 +18,10 @@
             },
         },
         render() {
+            if (!this.$scopedSlots.default) {
+                return ''
+            }
+
             return this.$scopedSlots.default({
                 value: this.value,
                 setValue: this.setValue(),
