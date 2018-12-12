@@ -87,6 +87,8 @@ All other components must be children of this component.
 
 #### `as-results`:
 Renders when there are results and provides access to the results
+##### Props
+* `tag`: The html tag to use as the container (default: div)
 
 #### `as-input`:
 A simple text input that will update the parameter value as its value changes.

@@ -7,6 +7,7 @@
 - Added `InfiniteScroll` component
 - Added debounce support to the `Param` component
 - Fixed errors when `Param` used as a way to register params
+- Added `tag` prop to the `Results` component
 
 ## 1.1.0
 - The fields used for the label and value of Checkbox/Radio/Select components
