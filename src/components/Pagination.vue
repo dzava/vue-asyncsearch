@@ -18,9 +18,10 @@
 <script>
     import ParamMixin from '../mixins/ParamMixin'
     import PaginationMixin from '../mixins/PaginationMixin'
+    import ValueMixin from '../mixins/ValueMixin'
 
     export default {
-        mixins: [ParamMixin, PaginationMixin],
+        mixins: [ParamMixin, PaginationMixin, ValueMixin()],
         methods: {
             page(page) {
                 this.value = page

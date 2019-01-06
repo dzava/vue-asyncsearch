@@ -16,9 +16,10 @@
 <script>
     import ParamMixin from '../mixins/ParamMixin'
     import OptionsMixin from '../mixins/OptionsMixin'
+    import ValueMixin from '../mixins/ValueMixin'
 
     export default {
-        mixins: [ParamMixin, OptionsMixin],
+        mixins: [ParamMixin, OptionsMixin, ValueMixin()],
         props: {
             defaultValue: {
                 type: Array,

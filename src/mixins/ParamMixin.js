@@ -25,20 +25,6 @@ export default {
             default: true,
         },
     },
-    computed: {
-        value: {
-            get() {
-                return this.searchStore.getQueryParam(this.name)
-            },
-            set(value) {
-                this.searchStore.stop()
-                this.resetParams.forEach(param => this.searchStore.resetQueryParam(param))
-                this.searchStore.start()
-
-                this.searchStore.setQueryParam(this.name, value)
-            },
-        },
-    },
     created() {
         this.searchStore.addQueryParam(this.name, this.defaultValue, {
             refreshOnChange: this.refreshOnChange,

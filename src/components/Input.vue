@@ -8,11 +8,12 @@
 
 <script>
     import ParamMixin from '../mixins/ParamMixin'
+    import ValueMixin from '../mixins/ValueMixin'
 
     const debounce = require('lodash.debounce')
 
     export default {
-        mixins: [ParamMixin],
+        mixins: [ParamMixin, ValueMixin()],
         props: {
             delay: {
                 type: Number,
