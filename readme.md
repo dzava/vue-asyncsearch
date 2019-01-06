@@ -46,14 +46,12 @@ Vue.use(AsyncSearch);
      		   placeholder="Search for users by their username"
                :reset-params="['page']"></as-input>
 
-     <as-select name="per_page"
-                :default-value="5"
-                :options="[
-                   {label: '3 users per page', value: 3},
-                   {label: '5 users per page', value: 5},
-                   {label: '10 users per page', value: 10},
-                   {label: '12 users per page', value: 12},
-                ]"></as-select>
+     <as-select name="per_page" :default-value="5" >
+         <option value="3">3 Users</option>
+         <option value="5">5 Users</option>
+         <option value="10">10 Users</option>
+         <option value="12">12 Users</option>
+     </as-select>
 
     <as-results>
         <div slot-scope="{ result: user }"> {{ user.username }} </div>
@@ -119,14 +117,10 @@ A component that will automatically load more results when it becomes visible.
 A component that allows setting a param from a list of values
 ##### Props
 * `name`: (required) same as `as-input`
-* `options`: an array of objects in the following format `{label: '', value: ''}`
 * `default-value`: The default value of the param, this value is used when resetting the parameters using the `as-clear` component. The value here should match the value key of one of the options
 * `reset-params`: An array of param names to reset when this param's value changes
 * `refresh-on-param-change`: same as `as-input`
 * `add-to-url`: boolean indicating if the param should be appended to the url when use history is true (default: true)
-* `label-field`: The field to be used as the label (Supports dot notation)
-* `value-field`: The field to be used as the value (Supports dot notation)
-
 
 #### `as-checkbox`:
 

@@ -9,6 +9,7 @@
 - Fixed errors when `Param` used as a way to register params
 - Added `tag` prop to the `Results` component
 - Simplified the `Checkbox` and `Radio` components. Removed all the extra markup and will now simply render an input field
+- Removed the `options` prop from the `Select` component. Can now be used the same ways as the native select.
 
 ## 1.1.0
 - The fields used for the label and value of Checkbox/Radio/Select components
