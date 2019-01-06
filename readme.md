@@ -132,26 +132,21 @@ A component that allows setting a param from a list of values
 
 ##### Props
 * `name`: (required) same as `as-input`, but the query parameter will be an array
-* `options`: an array of objects in the following format `{label: '', value: ''}`
-* `default-value`: The default value of the param, this value is used when resetting the parameters using the `as-clear` component. The value must be an array with each element
-being the value of one of the options that should be enabled by default
+* `value`: (required) The value of the checkbox when it is selected
+* `checked`: A Boolean attribute indicating whether or not this checkbox is currently selected
 * `reset-params`: An array of param names to reset when this param's value changes
 * `refresh-on-param-change`: same as `as-input`
 * `add-to-url`: boolean indicating if the param should be appended to the url when use history is true (default: true)
-* `label-field`: The field to be used as the label (Supports dot notation)
-* `value-field`: The field to be used as the value (Supports dot notation)
 
 #### `as-radio`:
 
 ##### Props
 * `name`: (required) same as `as-input`
-* `options`: an array of objects in the following format `{label: '', value: ''}`
-* `default-value`: The default value of the param, this value is used when resetting the parameters using the `as-clear` component. The value here should match the value key of one of the options
+* `value`: (required) The value of the radio button when it is selected
+* `checked`: A Boolean attribute indicating that this radio is the currently selected one
 * `reset-params`: An array of param names to reset when this param's value changes
 * `refresh-on-param-change`: same as `as-input`
 * `add-to-url`: boolean indicating if the param should be appended to the url when use history is true (default: true)
-* `label-field`: The field to be used as the label (Supports dot notation)
-* `value-field`: The field to be used as the value (Supports dot notation)
 
 #### `as-clear`:
 A button used to reset parameters to their default value

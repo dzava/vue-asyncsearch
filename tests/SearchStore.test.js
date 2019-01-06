@@ -69,6 +69,20 @@ describe('SearchStore', () => {
         expect(store.getQueryParam('role')).toBe('user')
     })
 
+    it('can change a params default value', () => {
+        store.setQueryParam('name', 'John Doe')
+        expect(store.getQueryParam('name')).toBe('John Doe')
+
+        store.resetQueryParam('name')
+        expect(store.getQueryParam('name')).toBe('John')
+
+        store.setDefaultValue('name', 'Jane')
+        expect(store.getQueryParam('name')).toBe('John')
+
+        store.resetQueryParam('name')
+        expect(store.getQueryParam('name')).toBe('Jane')
+    })
+
     it('throws when setting an unknown param', () => {
         expect(() => {
             store.setQueryParam('unknown', 'value')

@@ -2,31 +2,31 @@
 </style>
 
 <template>
-    <div>
-        <div class="as-radio-item" v-for="option in options">
-            <label class="as-radio-label">
-                <input type="radio" v-model="value" :value="getValueForOption(option)" :name="name"
-                       class="as-radio-radio">
-
-                {{ getLabelForOption(option) }}
-            </label>
-        </div>
-    </div>
+    <input type="radio" v-model="theValue" :value="value" :name="name">
 </template>
 
 <script>
     import ParamMixin from '../mixins/ParamMixin'
-    import OptionsMixin from '../mixins/OptionsMixin'
     import ValueMixin from '../mixins/ValueMixin'
 
     export default {
-        mixins: [ParamMixin, OptionsMixin, ValueMixin()],
+        mixins: [ParamMixin, ValueMixin('theValue')],
         props: {
-            defaultValue: {
-                default() {
-                    return ''
-                },
+            value: {
+                type: String,
+                required: true,
             },
+            checked: {
+                type: Boolean,
+                default: false,
+            },
+        },
+        created() {
+            if (!this.checked) {
+                return
+            }
+
+            this.searchStore.setQueryParam(this.name, this.value)
         },
     }
 </script>

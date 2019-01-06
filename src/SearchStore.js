@@ -75,6 +75,18 @@ export default class SearchStore {
         this.setQueryParam(param, this.getOption(`params.${param}.default`))
     }
 
+    getDefaultValue(param) {
+        this.guardAgainstUnknownParam(param)
+
+        return this._options.params[param].default
+    }
+
+    setDefaultValue(param, value) {
+        this.guardAgainstUnknownParam(param)
+
+        this._options.params[param].default = value
+    }
+
     isQueryParamDirty(param) {
         return !(this.getQueryParam(param) === this.getOption(`params.${param}.default`))
     }

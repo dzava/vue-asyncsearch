@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.2.0
+## 2.0.0
 - Support for object responses
 - The `Search` component no longer requires an explicit wrapper node for its children
 - Configurable prefix
@@ -8,6 +8,7 @@
 - Added debounce support to the `Param` component
 - Fixed errors when `Param` used as a way to register params
 - Added `tag` prop to the `Results` component
+- Simplified the `Checkbox` and `Radio` components. Removed all the extra markup and will now simply render an input field
 
 ## 1.1.0
 - The fields used for the label and value of Checkbox/Radio/Select components

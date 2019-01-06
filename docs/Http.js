@@ -45,7 +45,7 @@ export default class Http {
             results = results.filter(({banned}) => banned)
         }
 
-        if (filters.role.length) {
+        if (filters.role && filters.role.length) {
             results = results.filter(({role}) => filters.role.indexOf(role) > -1)
         }
 
