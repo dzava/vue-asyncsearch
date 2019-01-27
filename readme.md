@@ -168,6 +168,7 @@ Same as `as-load-more`.
 #### `as-no-results`:
 A component that renders when there are no results in the response
 #### Props
+* `tag`: The html tag to use as the container (default: div)
 * `path`: the key that is used to retrieve the results from the response data.
     Use an empty string if the results are the only data in the response. Supports dot notation. (default: data)
 

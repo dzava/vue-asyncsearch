@@ -1,21 +1,10 @@
-<style>
-</style>
-
-<template>
-    <div v-if="show">
-        <slot>
-            {{ message }}
-        </slot>
-    </div>
-</template>
-
 <script>
     export default {
         inject: ['searchStore'],
         props: {
-            message: {
+            tag: {
                 type: String,
-                default: 'No results matched your query.',
+                default: 'div',
             },
             path: {
                 type: String,
@@ -26,6 +15,13 @@
             show() {
                 return this.searchStore.getResults(this.path).length === 0 && !this.searchStore.isFirstLoad
             },
+        },
+        render(h) {
+            if (this.show === false) {
+                return null
+            }
+
+            return h(this.tag, this.$slots.default)
         },
     }
 </script>
