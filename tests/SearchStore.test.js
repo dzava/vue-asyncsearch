@@ -312,6 +312,20 @@ describe('SearchStore', () => {
             expect(window.location.search).toBe(encodeURI('?first_name=John&last_name=Doe&roles[]=admin&roles[]=moderator'))
         })
 
+        it('will keep existing query params that are not managed by the store', () => {
+            const http = getHttpMock()
+            window.history.pushState({}, '', '?first_name=Jane&foo=Bar')
+            store = new Store('/users', {http, refreshOnParamChange: false, useHistory: true})
+            store.addQueryParam('first_name', '').start()
+
+            expect(window.location.search).toBe('?first_name=Jane&foo=Bar')
+
+            store.setQueryParam('first_name', 'John')
+                .refresh()
+
+            expect(window.location.search).toBe(encodeURI('?first_name=John&foo=Bar'))
+        })
+
         it('will not initialize from the url query params when useHistory is false', () => {
             window.history.pushState({}, '', '?first_name=Jane')
             store = new Store('/users', {useHistory: false})

@@ -230,7 +230,7 @@ export default class SearchStore {
             return
         }
 
-        let searchParams = new URLSearchParams()
+        let searchParams = new URLSearchParams(location.search)
         for (let name in params) {
             if (!params.hasOwnProperty(name) || !this.isQueryParamDirty(name) || !this.getOption(`params.${name}.addToUrl`)) {
                 continue
@@ -240,7 +240,7 @@ export default class SearchStore {
             if (isArray(value)) {
                 value.forEach(v => searchParams.append(name, v))
             } else {
-                searchParams.append(name, value)
+                searchParams.set(name, value)
             }
         }
 
