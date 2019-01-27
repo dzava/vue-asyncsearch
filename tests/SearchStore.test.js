@@ -22,16 +22,38 @@ describe('SearchStore', () => {
         expect(store._http.defaults.baseURL).toBe('not-a-real-axios')
     })
 
-    it('can accept pagination configuration in options', () => {
-        store = new Store('/users', {
-            pagination: {last_page: 'total_pages', current_page: 'page'},
+    describe('Pagination', () => {
+
+        it('can accept pagination configuration in options', () => {
+            store = new Store('/users', {
+                pagination: {last_page: 'total_pages', current_page: 'page'},
+            })
+
+            expect(store.pagination).toEqual({last_page: 0, current_page: 0})
+
+            store._responses = [{total_pages: 3, page: 2}]
+
+            expect(store.pagination).toEqual({last_page: 3, current_page: 2})
         })
 
-        expect(store.pagination).toEqual({last_page: 0, current_page: 1})
+        it('uses the last response', () => {
+            expect(store.pagination).toEqual({last_page: 0, current_page: 0})
 
-        store.pagination = {total_pages: 3, page: 2}
+            store._responses = [{last_page: 3, current_page: 2}]
+            expect(store.pagination).toEqual({last_page: 3, current_page: 2})
 
-        expect(store.pagination).toEqual({last_page: 3, current_page: 2})
+            store._responses.push({last_page: 3, current_page: 3})
+            expect(store.pagination).toEqual({last_page: 3, current_page: 3})
+        })
+
+        it('does not fail when no pagination information are present in the response', () => {
+            expect(store.pagination).toEqual({last_page: 0, current_page: 0})
+
+            store._responses = [{data: []}]
+
+            expect(store.pagination).toEqual({last_page: 0, current_page: 0})
+        })
+
     })
 
     it('can add a new param', () => {
@@ -115,10 +137,15 @@ describe('SearchStore', () => {
     })
 
     it('will append the results on load more', async () => {
-        const http = getHttpMock({data: [{name: 'John Doe'}, {name: 'John Roe'}]})
+        const http = getHttpMock({
+            data: [{name: 'John Doe'}, {name: 'John Roe'}],
+            last_page: 5,
+            current_page: 3,
+        })
         store = new Store('/users', {http})
-        // store._results = [{name: 'Jane Doe'}]
-        store._responses = [{data: [{name: 'Jane Doe'}]}]
+        store._responses = [{data: [{name: 'Jane Doe'}], last_page: 5, current_page: 1}]
+
+        expect(store.pagination).toEqual({last_page: 5, current_page: 1})
 
         store.start()
         await store.loadMore()
@@ -126,6 +153,7 @@ describe('SearchStore', () => {
         expect(http.get).toHaveBeenCalledTimes(1)
         expect(http.get).toHaveBeenCalledWith('/users', {params: {}})
         expect(store.getResults()).toEqual([{name: 'Jane Doe'}, {name: 'John Doe'}, {name: 'John Roe'}])
+        expect(store.pagination).toEqual({last_page: 5, current_page: 3})
     })
 
     it('can use a different path to retrieve the results', async () => {
@@ -336,7 +364,9 @@ describe('SearchStore', () => {
 
             expect(window.location.search).toEqual('?last_name=Doe')
         })
+
     })
+
 })
 
 const getHttpMock = (data = {data: []}) => {

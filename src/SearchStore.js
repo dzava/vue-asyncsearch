@@ -7,7 +7,6 @@ export default class SearchStore {
         this._url = url
         this._responses = []
         this._stoppedCounter = 1
-        this._pagination = {last_page: 0, current_page: 1}
 
         this.isFirstLoad = true
         this.isLoading = false
@@ -124,7 +123,6 @@ export default class SearchStore {
 
         return this._submit().then(data => {
             this._responses = [data]
-            this.pagination = data
 
             return data
         })
@@ -133,7 +131,6 @@ export default class SearchStore {
     loadMore() {
         return this._submit().then(data => {
             this._responses.push(data)
-            this.pagination = data
 
             return data
         })
@@ -190,18 +187,27 @@ export default class SearchStore {
         return response
     }
 
-    set pagination(data) {
-        for (const key in this._pagination) {
-            if (!this._pagination.hasOwnProperty(key)) {
+    get pagination() {
+        const result = {current_page: 0, last_page: 0}
+        const response = this._lastResponse()
+
+        for (const key in this._options.pagination) {
+            if (!this._options.pagination.hasOwnProperty(key)) {
                 continue
             }
 
-            this._pagination[key] = obj_get(data, this._options.pagination[key], this._pagination[key])
+            result[key] = obj_get(response, this._options.pagination[key], 0)
         }
+
+        return result
     }
 
-    get pagination() {
-        return this._pagination
+    _lastResponse(def = []) {
+        if (this._responses.length === 0) {
+            return def
+        }
+
+        return this._responses[this._responses.length - 1]
     }
 
     getParamValueFromUrl(param, def) {
