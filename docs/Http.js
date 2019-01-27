@@ -5,20 +5,22 @@ export default class Http {
         return new Promise((resolve, reject) => {
             let results = this.applyFilters(params)
 
-            const totalPages = Math.ceil(results.length / params.per_page)
+            const perPage = parseInt(params.per_page)
+            const currentPage = parseInt(params.page)
+            const totalPages = Math.ceil(results.length / perPage)
 
-            const start = params.per_page * (params.page - 1)
-            results = results.slice(start, start + params.per_page)
+            const start = perPage * (currentPage - 1)
+            results = results.slice(start, start + perPage)
 
             setTimeout(() => {
-                console.log('resolved')
+                console.log('resolved', params, {start, end: start + perPage},)
                 resolve({
                     data: {
                         data: results,
                         pagination: {
                             last_page: totalPages,
-                            current_page: params.page,
-                            per_page: params.per_page,
+                            current_page: currentPage,
+                            per_page: perPage,
                         },
                     },
                 })
