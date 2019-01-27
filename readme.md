@@ -79,14 +79,14 @@ All other components must be children of this component.
 * `pagination`: an object that describes how to extract pagination information from the response. see [Configuraton](#configuration) for more information
 * `refresh-on-param-change`: a boolean indicating whether the results should be refreshed after a parameter value changes. default: `true`
 * `use-history`: a boolean indicating whether the query params should be added to the browser url. The url will also be used to set the values of the params
-* `results-path`: the key that is used to retrieve the results from the response data.
-    Use an empty string if the results are the only data in the response. Supports dot notation. (default: data)
 * `search-on-load`: a boolean indicating if results should be automatically fetched when the component loads. (default: true)
 
 #### `as-results`:
 Renders when there are results and provides access to the results
 ##### Props
 * `tag`: The html tag to use as the container (default: div)
+* `path`: the key that is used to retrieve the results from the response data.
+    Use an empty string if the results are the only data in the response. Supports dot notation. (default: data)
 
 #### `as-input`:
 A simple text input that will update the parameter value as its value changes.
@@ -167,6 +167,9 @@ Same as `as-load-more`.
 
 #### `as-no-results`:
 A component that renders when there are no results in the response
+#### Props
+* `path`: the key that is used to retrieve the results from the response data.
+    Use an empty string if the results are the only data in the response. Supports dot notation. (default: data)
 
 #### `as-search-button`:
 A button that refreshes the results

@@ -15,12 +15,16 @@
         props: {
             message: {
                 type: String,
-                default: 'No results matched your query.'
+                default: 'No results matched your query.',
+            },
+            path: {
+                type: String,
+                default: 'data',
             },
         },
         computed: {
             show() {
-                return this.searchStore.results.length === 0 && !this.searchStore.isFirstLoad
+                return this.searchStore.getResults(this.path).length === 0 && !this.searchStore.isFirstLoad
             },
         },
     }

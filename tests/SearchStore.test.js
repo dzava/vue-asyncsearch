@@ -102,14 +102,14 @@ describe('SearchStore', () => {
             current_page: 3,
         })
         store = new Store('/users', {http})
-        expect(store.results).toEqual([])
+        expect(store.getResults()).toEqual([])
 
         store.start()
         await store.refresh()
 
         expect(http.get).toHaveBeenCalledTimes(1)
         expect(http.get).toHaveBeenCalledWith('/users', {params: {}})
-        expect(store.results).toEqual([{name: 'John Doe'}, {name: 'John Roe'}])
+        expect(store.getResults()).toEqual([{name: 'John Doe'}, {name: 'John Roe'}])
         expect(store.pagination).toEqual({last_page: 5, current_page: 3})
 
     })
@@ -117,14 +117,15 @@ describe('SearchStore', () => {
     it('will append the results on load more', async () => {
         const http = getHttpMock({data: [{name: 'John Doe'}, {name: 'John Roe'}]})
         store = new Store('/users', {http})
-        store._results = [{name: 'Jane Doe'}]
+        // store._results = [{name: 'Jane Doe'}]
+        store._responses = [{data: [{name: 'Jane Doe'}]}]
 
         store.start()
         await store.loadMore()
 
         expect(http.get).toHaveBeenCalledTimes(1)
         expect(http.get).toHaveBeenCalledWith('/users', {params: {}})
-        expect(store.results).toEqual([{name: 'Jane Doe'}, {name: 'John Doe'}, {name: 'John Roe'}])
+        expect(store.getResults()).toEqual([{name: 'Jane Doe'}, {name: 'John Doe'}, {name: 'John Roe'}])
     })
 
     it('can use a different path to retrieve the results', async () => {
@@ -133,35 +134,35 @@ describe('SearchStore', () => {
             last_page: 5,
             current_page: 3,
         })
-        store = new Store('/users', {http, resultsPath: 'data.users'})
-        expect(store.results).toEqual([])
+        store = new Store('/users', {http})
+        expect(store.getResults('data.users')).toEqual([])
 
         store.start()
         await store.refresh()
 
-        expect(store.results).toEqual([{name: 'John Doe'}, {name: 'John Roe'}])
+        expect(store.getResults('data.users')).toEqual([{name: 'John Doe'}, {name: 'John Roe'}])
     })
 
     it('will use the entire response as results if the results path is empty', async () => {
         const http = getHttpMock([{name: 'John Doe'}, {name: 'John Roe'}])
-        store = new Store('/users', {http, resultsPath: ''})
-        expect(store.results).toEqual([])
+        store = new Store('/users', {http})
+        expect(store.getResults()).toEqual([])
 
         store.start()
         await store.refresh()
 
-        expect(store.results).toEqual([{name: 'John Doe'}, {name: 'John Roe'}])
+        expect(store.getResults('')).toEqual([{name: 'John Doe'}, {name: 'John Roe'}])
     })
 
-    it('supports object responses', async () => {
+    it('supports object _responses', async () => {
         const http = getHttpMock({users: [{name: 'John Doe'}, {name: 'John Roe'}], posts: [{title: 'Who is John Doe'}]})
-        store = new Store('/users', {http, resultsPath: ''})
-        expect(store.results).toEqual([])
+        store = new Store('/users', {http})
+        expect(store.getResults('')).toEqual([])
 
         store.start()
         await store.refresh()
 
-        expect(store.results).toEqual([
+        expect(store.getResults('')).toEqual([
             ['users', [{name: 'John Doe'}, {name: 'John Roe'}]],
             ['posts', [{title: 'Who is John Doe'}]],
         ])

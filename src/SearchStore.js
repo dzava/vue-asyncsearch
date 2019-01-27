@@ -5,7 +5,7 @@ const pickBy = require('lodash.pickby')
 export default class SearchStore {
     constructor(url, options = {}) {
         this._url = url
-        this._results = []
+        this._responses = []
         this._stoppedCounter = 1
         this._pagination = {last_page: 0, current_page: 1}
 
@@ -18,7 +18,6 @@ export default class SearchStore {
             refreshOnParamChange: true,
             useHistory: true,
             params: {},
-            resultsPath: 'data',
         }, options)
     }
 
@@ -124,7 +123,7 @@ export default class SearchStore {
         }
 
         return this._submit().then(data => {
-            this._results = this._getResultsFromResponse(data)
+            this._responses = [data]
             this.pagination = data
 
             return data
@@ -133,10 +132,16 @@ export default class SearchStore {
 
     loadMore() {
         return this._submit().then(data => {
-            this._results = this._results.concat(this._getResultsFromResponse(data))
+            this._responses.push(data)
             this.pagination = data
 
             return data
+        })
+    }
+
+    getResults(path = 'data') {
+        return this._responses.flatMap(r => {
+            return this._getResultsFromResponse(r, path)
         })
     }
 
@@ -173,9 +178,9 @@ export default class SearchStore {
             })
     }
 
-    _getResultsFromResponse(response) {
-        if (this._options.resultsPath) {
-            response = obj_get(response, this._options.resultsPath, [])
+    _getResultsFromResponse(response, path) {
+        if (path) {
+            response = obj_get(response, path, [])
         }
 
         if (isObject(response)) {
@@ -197,14 +202,6 @@ export default class SearchStore {
 
     get pagination() {
         return this._pagination
-    }
-
-    get results() {
-        return this._results
-    }
-
-    set results(value) {
-        this._results = value
     }
 
     getParamValueFromUrl(param, def) {

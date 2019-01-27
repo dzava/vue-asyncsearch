@@ -45,10 +45,6 @@
                 type: Boolean,
                 default: true,
             },
-            resultsPath: {
-                type: String,
-                default: 'data',
-            },
             searchOnLoad: {
                 type: Boolean,
                 default: true,
@@ -66,7 +62,6 @@
                     pagination: this.pagination,
                     refreshOnParamChange: this.refreshOnParamChange,
                     useHistory: this.useHistory,
-                    resultsPath: this.resultsPath,
                 }
             },
         },

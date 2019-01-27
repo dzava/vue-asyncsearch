@@ -6,13 +6,17 @@
                 type: String,
                 default: 'div',
             },
+            path: {
+                type: String,
+                default: 'data',
+            },
         },
         data: function () {
             return {}
         },
         computed: {
             results() {
-                return this.searchStore.results
+                return this.searchStore.getResults(this.path)
             },
             shouldRender() {
                 return this.results.length > 0
