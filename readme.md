@@ -150,7 +150,8 @@ A button used to reset parameters to their default value
 #### `as-loading`:
 A component that is rendered while fetching results
 ##### Props
-* `message`: the message to display. defailt: `'Loading...'`
+* `tag`: The html tag to use as the container (default: div)
+* `delay`: The time in milliseconds to wait before showing the component after a request has started. (default: 0)
 
 #### `as-load-more`:
 A button that, will increase the param value by one, perform a new request and append the response data to the results.

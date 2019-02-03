@@ -12,6 +12,8 @@
 - Removed the `options` prop from the `Select` component. Can now be used the same ways as the native select.
 - Removed the `results-path` prop from the `Search` component. Use the `path` prop of the `Results` and `NoResults` components.
 - Query params that are not managed by the Store will no longer be deleted when updating the url
+- Removed `message` prop from the `Loading` component
+- Added `tag` and `delay` props to the `Loading` component
 
 ## 1.1.0
 - The fields used for the label and value of Checkbox/Radio/Select components
