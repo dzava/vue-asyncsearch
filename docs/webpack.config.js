@@ -1,5 +1,5 @@
-const path = require('path');
-const merge = require('webpack-merge');
+const path = require('path')
+const merge = require('webpack-merge')
 
 module.exports = merge(require('../webpack.base'), {
     context: __dirname,
@@ -20,6 +20,6 @@ module.exports = merge(require('../webpack.base'), {
 
     devServer: {
         contentBase: __dirname,
-        port: 2000,
+        port: 8000,
     },
-});
+})
