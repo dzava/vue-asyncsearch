@@ -14,6 +14,7 @@
 - Query params that are not managed by the Store will no longer be deleted when updating the url
 - Removed `message` prop from the `Loading` component
 - Added `tag` and `delay` props to the `Loading` component
+- Removed `label` prop from SearchButton
 
 ## 1.1.0
 - The fields used for the label and value of Checkbox/Radio/Select components
