@@ -323,7 +323,37 @@ describe('SearchStore', () => {
             store.setQueryParam('first_name', 'John')
                 .refresh()
 
-            expect(window.location.search).toBe(encodeURI('?first_name=John&foo=Bar'))
+            expect(window.location.search).toBe(encodeURI('?foo=Bar&first_name=John'))
+        })
+
+        it('will remove params when they have the default value', async () => {
+            const http = getHttpMock()
+            window.history.pushState({}, '', '?first_name=Jane&foo=Bar')
+            store = new Store('/users', {http, refreshOnParamChange: false, useHistory: true})
+            store.addQueryParam('first_name', '').start()
+
+            expect(window.location.search).toBe('?first_name=Jane&foo=Bar')
+
+            await store.setQueryParam('first_name', 'John').refresh()
+            expect(window.location.search).toBe('?foo=Bar&first_name=John')
+
+            await store.setQueryParam('first_name', '').refresh()
+            expect(window.location.search).toBe(encodeURI('?foo=Bar'))
+        })
+
+        it('will only add an array param one time for each value', async () => {
+            const http = getHttpMock()
+            window.history.pushState({}, '', '?foo=Bar')
+            store = new Store('/users', {http, refreshOnParamChange: false, useHistory: true})
+            store.addQueryParam('role', []).start()
+
+            expect(window.location.search).toBe('?foo=Bar')
+
+            await store.setQueryParam('role', ['user']).loadMore()
+            expect(window.location.search).toBe(encodeURI('?foo=Bar&role=user'))
+
+            await store.loadMore()
+            expect(window.location.search).toBe(encodeURI('?foo=Bar&role=user'))
         })
 
         it('will not initialize from the url query params when useHistory is false', () => {

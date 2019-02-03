@@ -231,18 +231,17 @@ export default class SearchStore {
         }
 
         let searchParams = new URLSearchParams(location.search)
-        for (let name in params) {
-            if (!params.hasOwnProperty(name) || !this.isQueryParamDirty(name) || !this.getOption(`params.${name}.addToUrl`)) {
-                continue
-            }
+        Object.keys(this.state.params).forEach(param => searchParams.delete(param))
 
-            const value = params[name]
-            if (isArray(value)) {
-                value.forEach(v => searchParams.append(name, v))
-            } else {
-                searchParams.set(name, value)
-            }
-        }
+        Object.entries(params)
+            .filter(([param]) => !(!this.isQueryParamDirty(param) || !this.getOption(`params.${param}.addToUrl`)))
+            .forEach(([param, value]) => {
+                if (isArray(value)) {
+                    value.forEach(v => searchParams.append(param, v))
+                } else {
+                    searchParams.set(param, value)
+                }
+            })
 
         window.history.replaceState({}, '', `${location.pathname}?${searchParams}`)
     }
