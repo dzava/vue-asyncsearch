@@ -2842,7 +2842,7 @@ var TAG = __webpack_require__(5)('toStringTag');
 // ES3 wrong here
 var ARG = cof(function () { return arguments; }()) == 'Arguments';
 
-// fallback for IE11 Script Access Denied error
+// fallback for IE11 Script Access Denied _error
 var tryGet = function (it, key) {
   try {
     return it[key];
@@ -7485,8 +7485,8 @@ function renderMixin (Vue) {
       vnode = render.call(vm._renderProxy, vm.$createElement);
     } catch (e) {
       handleError(e, vm, "render");
-      // return error render result,
-      // or previous vnode to prevent render error causing blank component
+      // return _error render result,
+      // or previous vnode to prevent render _error causing blank component
       /* istanbul ignore else */
       {
         if (vm.$options.renderError) {
@@ -8784,7 +8784,7 @@ function createPatchFunction (backend) {
       if (isDef(key)) {
         if (seenKeys[key]) {
           warn(
-            ("Duplicate keys detected: '" + key + "'. This may cause an update error."),
+            ("Duplicate keys detected: '" + key + "'. This may cause an update _error."),
             vnode.context
           );
         } else {
@@ -9777,7 +9777,7 @@ function model (
 
   {
     // inputs with type="file" are read only and setting the input's
-    // value will throw an error.
+    // value will throw an _error.
     if (tag === 'input' && type === 'file') {
       warn$1(
         "<" + (el.tag) + " v-model=\"" + value + "\" type=\"file\">:\n" +
@@ -13951,7 +13951,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
         // So if we're currently running a task, we'll need to delay this invocation.
         if (currentlyRunningATask) {
             // Delay by doing a setTimeout. setImmediate was tried instead, but in Firefox 7 it generated a
-            // "too much recursion" error.
+            // "too much recursion" _error.
             setTimeout(runIfPresent, 0, handle);
         } else {
             var task = tasksByHandle[handle];
@@ -14138,7 +14138,7 @@ function runTimeout(fun) {
             // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
             return cachedSetTimeout.call(null, fun, 0);
         } catch(e){
-            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global _error
             return cachedSetTimeout.call(this, fun, 0);
         }
     }
@@ -14163,7 +14163,7 @@ function runClearTimeout(marker) {
             // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
             return cachedClearTimeout.call(null, marker);
         } catch (e){
-            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global _error.
             // Some versions of I.E. have different rules for clearTimeout vs setTimeout
             return cachedClearTimeout.call(this, marker);
         }

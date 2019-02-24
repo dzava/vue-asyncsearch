@@ -1,4 +1,5 @@
 import Clear from './components/Clear'
+import Error from './components/Error'
 import Select from './components/Select'
 import Input from './components/Input'
 import InfiniteScroll from './components/InfiniteScroll'
@@ -17,6 +18,7 @@ import SearchStore from './SearchStore'
 const AsyncSearch = {
     install(Vue, prefix = 'as') {
         Vue.component(`${prefix}-clear`, Clear)
+        Vue.component(`${prefix}-error`, Error)
         Vue.component(`${prefix}-select`, Select)
         Vue.component(`${prefix}-input`, Input)
         Vue.component(`${prefix}-infinite-scroll`, InfiniteScroll)
@@ -37,6 +39,7 @@ export default AsyncSearch
 
 export {
     Clear,
+    Error,
     Select,
     Input,
     Loading,

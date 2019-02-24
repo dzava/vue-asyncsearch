@@ -3,6 +3,12 @@ import demoData from './demo-data'
 export default class Http {
     get(url, {params}) {
         return new Promise((resolve, reject) => {
+            const timeoutAfter = params.timeout || 500
+
+            if (params.reject && params.reject.length) {
+                return setTimeout(() => reject({response: {data: {message: 'Ooops! Something went wrong.'}}}), timeoutAfter)
+            }
+
             let results = this.applyFilters(params)
 
             const perPage = parseInt(params.per_page)
@@ -13,7 +19,7 @@ export default class Http {
             results = results.slice(start, start + perPage)
 
             setTimeout(() => {
-                console.log('resolved', params, {start, end: start + perPage},)
+                console.log('resolved', params, {start, end: start + perPage})
                 resolve({
                     data: {
                         data: results,
@@ -24,7 +30,7 @@ export default class Http {
                         },
                     },
                 })
-            }, 500)
+            }, timeoutAfter)
         })
     }
 

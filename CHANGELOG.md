@@ -15,6 +15,7 @@
 - Removed `message` prop from the `Loading` component
 - Added `tag` and `delay` props to the `Loading` component
 - Removed `label` prop from SearchButton
+- Added Error component
 
 ## 1.1.0
 - The fields used for the label and value of Checkbox/Radio/Select components

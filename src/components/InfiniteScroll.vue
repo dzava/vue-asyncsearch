@@ -54,7 +54,7 @@
                 this.timesLoaded++
 
                 this.searchStore.stop()
-                this.value++
+                this.value = this.current + 1
                 this.searchStore.loadMore()
                 this.searchStore.start()
             },

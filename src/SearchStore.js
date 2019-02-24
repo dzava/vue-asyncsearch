@@ -6,6 +6,7 @@ export default class SearchStore {
     constructor(url, options = {}) {
         this._url = url
         this._responses = []
+        this._error = null
         this._stoppedCounter = 1
 
         this.isFirstLoad = true
@@ -125,6 +126,7 @@ export default class SearchStore {
             this._responses = [data]
 
             return data
+        }).catch(error => {
         })
     }
 
@@ -133,6 +135,7 @@ export default class SearchStore {
             this._responses.push(data)
 
             return data
+        }).catch(error => {
         })
     }
 
@@ -140,6 +143,10 @@ export default class SearchStore {
         return this._responses.flatMap(r => {
             return this._getResultsFromResponse(r, path)
         })
+    }
+
+    getError(path = '') {
+        return path === '' ? this._error : obj_get(this._error, path, null)
     }
 
     getOption(name, def = undefined) {
@@ -163,15 +170,16 @@ export default class SearchStore {
             .then(({data}) => {
                 this.isLoading = false
                 this.isFirstLoad = false
+                this._error = null
                 this.start()
-
                 return data
             })
             .catch(error => {
                 this.isLoading = false
+                this._error = error.response.data
                 this.start()
 
-                return error
+                throw new Error(this._error)
             })
     }
 

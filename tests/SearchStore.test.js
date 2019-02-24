@@ -1,3 +1,4 @@
+import each from 'jest-each'
 import Store from '../src/SearchStore'
 
 let store
@@ -411,12 +412,85 @@ describe('SearchStore', () => {
 
     })
 
+    describe('Errors', () => {
+        it('can be retrieved', async () => {
+            const http = getRejectedHttpMock({message: 'Some error'})
+            store = new Store('/users', {http: http})
+            store.start()
+
+            expect(store.getError()).toBeNull()
+
+            await store.refresh()
+
+            expect(store.getError()).toEqual({message: 'Some error'})
+        })
+
+        it('can be retrieved using a path', async () => {
+            const http = getRejectedHttpMock({error: {message: 'Some error'}})
+            store = new Store('/users', {http: http})
+            store.start()
+
+            expect(store.getError('error.message')).toBeNull()
+
+            await store.refresh()
+
+            expect(store.getError('error.message')).toEqual('Some error')
+        })
+
+        it('are cleared when a request is successful', async () => {
+            const http = getHttpMock()
+            store = new Store('/users', {http: http})
+            store._error = {message: 'Some error'}
+            store.start()
+
+            expect(store.getError()).toEqual({message: 'Some error'})
+
+            await store.refresh()
+
+            expect(store.getError()).toBeNull()
+        })
+
+        each(['refresh', 'loadMore']).test('do not reset the results (%s)', async (method) => {
+            const http = getRejectedHttpMock('Some error')
+            store = new Store('/users', {http: http})
+            addResponseToStore('Jane Doe')
+            store.start()
+
+            expect(store.getError()).toBeNull()
+            expect(store.getResults()).toEqual(['Jane Doe'])
+
+            await store[method]()
+
+            expect(store.getError()).toEqual('Some error')
+            expect(store.getResults()).toEqual(['Jane Doe'])
+        })
+    })
+
 })
+
+const addResponseToStore = (response, thestore = null) => {
+    thestore = thestore || store
+
+    thestore._responses = [{data: [response]}]
+}
 
 const getHttpMock = (data = {data: []}) => {
     const getMock = jest.fn()
     getMock.mockReturnValue(new Promise((resolve) => {
         resolve({data})
+    }))
+
+    const mock = jest.fn().mockImplementation(() => {
+        return {get: getMock}
+    })
+
+    return new mock()
+}
+
+const getRejectedHttpMock = (data) => {
+    const getMock = jest.fn()
+    getMock.mockReturnValue(new Promise((resolve, reject) => {
+        reject({response: {data}})
     }))
 
     const mock = jest.fn().mockImplementation(() => {

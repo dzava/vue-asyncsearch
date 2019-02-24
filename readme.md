@@ -98,6 +98,12 @@ A simple text input that will update the parameter value as its value changes.
 * `delay`: the delay (in milliseconds), since the last time the value changed, after which the results will be refreshed
 * `add-to-url`: boolean indicating if the param should be appended to the url when use history is true (default: true)
 
+#### `as-error`:
+A component that can be used to retrieve errors when a request fails
+##### Props
+* `tag`: The html tag to use as the container (default: div)
+* `path`: the key that is used to retrieve the errors from the response. Supports dot notation.
+
 #### `as-infinite-scroll`:
 A component that will automatically load more results when it becomes visible.
 ##### Props
