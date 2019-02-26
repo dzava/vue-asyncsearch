@@ -1,5 +1,5 @@
 <template>
-    <component :is="tag" v-if="error">
+    <component :is="tag" v-if="shouldRender">
         <slot :error="error">{{ error }}</slot>
     </component>
 </template>
@@ -18,6 +18,9 @@
             },
         },
         computed: {
+            shouldRender() {
+                return this.searchStore.hasErrors()
+            },
             error() {
                 return this.searchStore.getError(this.path)
             },

@@ -149,6 +149,10 @@ export default class SearchStore {
         return path === '' ? this._error : obj_get(this._error, path, null)
     }
 
+    hasErrors() {
+        return this._error !== null
+    }
+
     getOption(name, def = undefined) {
         const value = obj_get(this._options, name, def)
 
@@ -176,7 +180,7 @@ export default class SearchStore {
             })
             .catch(error => {
                 this.isLoading = false
-                this._error = error.response.data
+                this._error = error.response
                 this.start()
 
                 throw new Error(this._error)

@@ -419,10 +419,12 @@ describe('SearchStore', () => {
             store.start()
 
             expect(store.getError()).toBeNull()
+            expect(store.hasErrors()).toBe(false)
 
             await store.refresh()
 
             expect(store.getError()).toEqual({message: 'Some error'})
+            expect(store.hasErrors()).toBe(true)
         })
 
         it('can be retrieved using a path', async () => {
@@ -444,10 +446,12 @@ describe('SearchStore', () => {
             store.start()
 
             expect(store.getError()).toEqual({message: 'Some error'})
+            expect(store.hasErrors()).toBe(true)
 
             await store.refresh()
 
             expect(store.getError()).toBeNull()
+            expect(store.hasErrors()).toBe(false)
         })
 
         each(['refresh', 'loadMore']).test('do not reset the results (%s)', async (method) => {
@@ -490,7 +494,7 @@ const getHttpMock = (data = {data: []}) => {
 const getRejectedHttpMock = (data) => {
     const getMock = jest.fn()
     getMock.mockReturnValue(new Promise((resolve, reject) => {
-        reject({response: {data}})
+        reject({response: data})
     }))
 
     const mock = jest.fn().mockImplementation(() => {
