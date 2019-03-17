@@ -118,6 +118,7 @@ A component that will automatically load more results when it becomes visible.
 * `default`: The default slot context contains two props.
 	* `reachedTheEnd`: becomes true when no more pages are available
 	* `reachedLimit`: becomes true when the component has triggered as many times as the `limit` prop. When the limit is disabled the prop will always be false
+	* `timesLoaded`: integer that counts how many times a request was made because of the component
 
 #### `as-select`:
 A component that allows setting a param from a list of values

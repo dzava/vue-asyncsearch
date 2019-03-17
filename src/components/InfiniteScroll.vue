@@ -3,8 +3,7 @@
 
 <template>
     <div>
-        <slot :reachedTheEnd="reachedTheEnd" :reachedLimit="reachedLimit">
-        </slot>
+        <slot :reachedTheEnd="reachedTheEnd" :reachedLimit="reachedLimit" :timesLoaded="timesLoaded"></slot>
     </div>
 </template>
 

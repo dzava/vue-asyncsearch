@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.0
+- Added `timesLoaded` slot param to the `InfiniteScroll` component
+- Fixed error in `InfiniteScroll` caused by calling observe before the IntersectionObserver was initialized
+
 ## 2.0.0
 - Support for object responses
 - The `Search` component no longer requires an explicit wrapper node for its children
