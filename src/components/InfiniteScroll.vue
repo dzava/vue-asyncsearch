@@ -51,18 +51,18 @@
                 if (this.reachedTheEnd) {
                     return
                 }
-                this.timesLoaded++
 
                 this.searchStore.stop()
                 this.value = this.current + 1
-                this.searchStore.loadMore()
                 this.searchStore.start()
+                this.searchStore.loadMore()
+                    .then(() => this.timesLoaded++)
+
             },
             setupObserver() {
                 this.observer = new IntersectionObserver((entries) => {
 
                     if (this.reachedLimit) {
-                        this.observer.disconnect()
                         return
                     }
 
@@ -85,7 +85,6 @@
                 }
 
                 this.timesLoaded = 0
-                this.observer.observe(this.$el)
             },
         },
         mounted() {
