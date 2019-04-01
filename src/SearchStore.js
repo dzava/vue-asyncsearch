@@ -131,10 +131,6 @@ export default class SearchStore {
     }
 
     loadMore() {
-        if (this._stoppedCounter !== 0) {
-            return
-        }
-
         return this._submit().then(data => {
             this._responses.push(data)
 

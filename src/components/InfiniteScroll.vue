@@ -1,6 +1,3 @@
-<style>
-</style>
-
 <template>
     <div>
         <slot :reachedTheEnd="reachedTheEnd" :reachedLimit="reachedLimit" :timesLoaded="timesLoaded"></slot>
@@ -47,7 +44,7 @@
         },
         methods: {
             loadMore() {
-                if (this.reachedTheEnd) {
+                if (this.reachedTheEnd || this.isLoading) {
                     return
                 }
 

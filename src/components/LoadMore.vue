@@ -4,7 +4,7 @@
 <template>
     <button v-if="current < total"
             :disabled="isLoading"
-            :class="{ 'as-load-more-is-loading': isLoading }"
+            :class="{ 'is-loading': isLoading }"
             @click="loadMore()">
         <slot>
             {{ label }}
@@ -34,12 +34,11 @@
                 if (this.reachedTheEnd) {
                     return
                 }
+
                 this.searchStore.stop()
-
                 this.value = this.current + 1
-                this.searchStore.loadMore()
-
                 this.searchStore.start()
+                this.searchStore.loadMore()
             },
         },
     }
