@@ -8,7 +8,7 @@
     "start": "webpack-dev-server --config docs/webpack.config.js --mode development",
     "build": "rm -rf dist && NODE_ENV=production webpack --mode production",
     "demo": "NODE_ENV=production webpack --config docs/webpack.config.js  --mode development",
-    "prepublish": "npm run test; npm run build",
+    "prepublishOnly": "npm run test; npm run build",
     "test": "jest"
   },
   "repository": {
