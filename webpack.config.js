@@ -3,7 +3,7 @@ const merge = require('webpack-merge');
 
 module.exports = merge(require('./webpack.base'), {
     context: __dirname,
-
+    mode: 'production',
     entry: './src/index.js',
 
     output: {
