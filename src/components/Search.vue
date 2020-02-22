@@ -49,6 +49,10 @@
                 type: Boolean,
                 default: true,
             },
+            tag: {
+                type: String,
+                default: 'div',
+            },
         },
         data() {
             return {
@@ -71,12 +75,19 @@
                 this.localSearchStore.refresh()
             }
         },
+        methods: {
+            refresh() {
+                this.localSearchStore.refresh()
+            },
+        },
         render(h) {
-            if (this.$slots.default.length > 1) {
-                return h('div', this.$slots.default)
+            const slots = this.$scopedSlots.default({refresh: this.refresh})
+
+            if (slots.length === 1) {
+                return slots[0]
             }
 
-            return this.$slots.default[0]
+            return h(this.tag, slots)
         },
     }
 </script>

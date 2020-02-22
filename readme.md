@@ -80,6 +80,11 @@ All other components must be children of this component.
 * `refresh-on-param-change`: a boolean indicating whether the results should be refreshed after a parameter value changes. default: `true`
 * `use-history`: a boolean indicating whether the query params should be added to the browser url. The url will also be used to set the values of the params
 * `search-on-load`: a boolean indicating if results should be automatically fetched when the component loads. (default: true)
+* `tag`: The html tag to use as the container, when multiple root nodes are present (default: div)
+##### Slots
+* `default`: The default slot context contains one prop.
+	* `refresh`: refresh the search results
+
 
 #### `as-results`:
 Renders when there are results and provides access to the results
@@ -115,7 +120,7 @@ A component that will automatically load more results when it becomes visible.
 * `options`: The options object to pass to the [Intersection Observer](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API#Intersection_observer_options). (default: {})
 * `delay`: The initial delay before the first load. Can be used to prevent the component from instantly triggering before the initial load is completed.  (default: 1000)
 ##### Slots
-* `default`: The default slot context contains two props.
+* `default`: The default slot context contains three props.
 	* `reachedTheEnd`: becomes true when no more pages are available
 	* `reachedLimit`: becomes true when the component has triggered as many times as the `limit` prop. When the limit is disabled the prop will always be false
 	* `timesLoaded`: integer that counts how many times a request was made because of the component
