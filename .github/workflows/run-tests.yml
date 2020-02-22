@@ -1,0 +1,30 @@
+name: run-tests
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        vue: [2.3, "latest"]
+
+    name: Vue@${{ matrix.vue }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v1
+
+      - name: Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: '13.x'
+
+      - name: Install dependencies
+        run: npm install
+
+      - run: npm install vue@${{matrix.vue}}
+
+      - name: Run tests
+        run: node node_modules/jest/bin/jest.js
